@@ -454,6 +454,134 @@ for x0, y0 in [(0, 0), (-4, 0), (-8, 0), (2, 0), (6, 0)]:
         plot_iterates(x0, y0, steps, steps[-1])</code></pre>
 
     <h4>1.3.3 Other Functions and Non-Polynomial Cases</h4>
-    <!-- TODO: after writing the code, add results here for other polynomials and for exponential, logarithmic, radical, and rational functions. Same pattern: short trace, result, and a figure per case. -->
+    <p>
+      <code>find_distance_newton</code> takes $f$, $f'$ and $f''$ as inputs, so
+      the same routine works for any twice-differentiable function, and only the
+      three function definitions change. Three more cases are shown below: a
+      cubic polynomial, an exponential, and a radical function. The radical case
+      needs a positive initial guess, since $f'(x)$ is undefined at $x = 0$.
+    </p>
+
+    <ol>
+      <li>
+        <strong>Polynomial: $f(x) = \frac{1}{4}x^3 - x$</strong>
+        <p>
+          $f'(x) = \frac{3}{4}x^2 - 1$, $f''(x) = \frac{3}{2}x$. Initial guess:
+          $0$.
+        </p>
+        <p>
+          Point $(4, 0)$: $x^* \approx 2.2572$, closest point $(2.2572,\
+          0.6178)$, $d \approx 1.8491$<br />
+          Point $(-4, 2)$: $x^* \approx -1.7768$, closest point $(-1.7768,\
+          0.3745)$, $d \approx 2.7541$
+        </p>
+        <figure>
+          <img
+            src="media/cubic.png"
+            alt="Shortest distance from (4, 0) and (-4, 2) to y = x^3/4 - x"
+          />
+          <figcaption>
+            Figure 6: Shortest distance to $f(x) = \frac{1}{4}x^3 - x$.
+          </figcaption>
+        </figure>
+      </li>
+
+      <li>
+        <strong>Exponential: $f(x) = e^x$</strong>
+        <p>$f'(x) = f''(x) = e^x$. Initial guess: $0$.</p>
+        <p>
+          Point $(2, 0)$: $x^* \approx 0.2731$, closest point $(0.2731,\
+          1.3141)$, $d \approx 2.1700$<br />
+          Point $(0, -2)$: $x^* \approx -0.9371$, closest point $(-0.9371,\
+          0.3918)$, $d \approx 2.5688$
+        </p>
+        <figure>
+          <img
+            src="media/exp.png"
+            alt="Shortest distance from (2, 0) and (0, -2) to y = e^x"
+          />
+          <figcaption>Figure 7: Shortest distance to $f(x) = e^x$.</figcaption>
+        </figure>
+      </li>
+
+      <li>
+        <strong>Radical: $f(x) = \sqrt{x}$</strong>
+        <p>
+          $f'(x) = \frac{1}{2\sqrt{x}}$, $f''(x) = -\frac{1}{4x^{3/2}}$. Initial
+          guess: $1$.
+        </p>
+        <p>
+          Point $(4, 0)$: $x^* = 3.5000$, closest point $(3.5000,\ 1.8708)$, $d
+          \approx 1.9365$<br />
+          Point $(2, 3)$: $x^* \approx 2.4570$, closest point $(2.4570,\
+          1.5675)$, $d \approx 1.5036$
+        </p>
+        <figure>
+          <img
+            src="media/sqrt.png"
+            alt="Shortest distance from (4, 0) and (2, 3) to y = sqrt(x)"
+          />
+          <figcaption>
+            Figure 8: Shortest distance to $f(x) = \sqrt{x}$.
+          </figcaption>
+        </figure>
+      </li>
+    </ol>
+
+    <p>
+      Newton's method converges to a local minimum of $D(x)$ near the initial
+      guess, so for curves like the cubic, which can have more than one, the
+      result depends on where the iteration starts. The points above converge to
+      the true minimum.
+    </p>
+
+    <p>
+      The results and figures above were produced with the following script:
+    </p>
+
+    <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+# find_distance_newton is the same function as in Section 1.3.1
+
+def run_case(name, label, f, df, ddf, guess, points, xlim, ylim):
+    """Find the shortest distance for each point and plot the results."""
+    x = np.linspace(*xlim, 400)
+    plt.plot(x, f(x), "b-", label=f"y = {label}")
+
+    for x0, y0 in points:
+        d, x_star = find_distance_newton(x0, y0, f, df, ddf, initial_guess=guess)
+        y_star = f(x_star)
+        print(f"{label:10s} ({x0}, {y0}): x* = {x_star:.4f}, "
+              f"closest = ({x_star:.4f}, {y_star:.4f}), d = {d:.4f}")
+
+        plt.plot(x0, y0, "ro")                        # the query point
+        plt.plot(x_star, y_star, "g*", markersize=12)  # closest point on curve
+        plt.plot([x0, x_star], [y0, y_star], "g--",
+                 label=f"({x0}, {y0}): d = {d:.2f}")
+
+    plt.title(f"Shortest distance to y = {label}")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.xlim(*xlim)
+    plt.ylim(*ylim)
+    plt.gca().set_aspect("equal")
+    plt.legend(loc="best")
+    plt.savefig(f"media/{name}.png", dpi=150)
+    plt.close()
+
+# other polynomial: f(x) = x^3/4 - x
+run_case("cubic", "x^3/4 - x",
+         lambda x: x**3 / 4 - x, lambda x: 3 * x**2 / 4 - 1, lambda x: 3 * x / 2,
+         0.0, [(4, 0), (-4, 2)], (-5, 5), (-5, 5))
+
+# exponential: f(x) = e^x
+run_case("exp", "e^x", np.exp, np.exp, np.exp,
+         0.0, [(2, 0), (0, -2)], (-3, 4), (-3, 6))
+
+# radical: f(x) = sqrt(x)  (needs a positive initial guess)
+run_case("sqrt", "sqrt(x)",
+         np.sqrt, lambda x: 0.5 / np.sqrt(x), lambda x: -0.25 * x**-1.5,
+         1.0, [(4, 0), (2, 3)], (0, 8), (-1, 4))</code></pre>
   </body>
 </html>
