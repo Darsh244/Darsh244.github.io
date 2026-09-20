@@ -72,99 +72,388 @@
 
     <h4>1.2.1 Analytical Solutions</h4>
     <p>
-      The <code>numpy.roots()</code> function will be used to solve Equation (1)
-      for each given point. The resulting real root gives the value of $x$ that
-      minimizes $D(x)$, which can then be substituted into the distance formula
-      to obtain the minimum distance.
+      The <code>numpy.roots()</code> function is used to solve Equation (1) for
+      each given point. The resulting real root is the value of $x$ that
+      minimizes $D(x)$, which is then substituted into the distance formula to
+      obtain the minimum distance.
     </p>
+
     <ol>
       <li>
-        <strong>Point $(0, 0)$:</strong> <br />
-        $x_0 = 0$, $y_0 = 0$ <br />
-        Substituting the coordinates of the point $(0,0)$ into Equation (1)
-        yields:
-        <div class="equation">$2x^3 + 11x = 0$</div>
-        The real root is $x^*=0$. Substituting this value into the distance
-        formula yields:
-        <div class="equation">$d = \sqrt{(0 - 0)^2 + (f(0) - 0)^2}$</div>
-        Since $f(0) = 0^2 + 5 = 5$, this becomes:
-        <div class="equation">$d = \sqrt{(0 - 0)^2 + (5 - 0)^2} = 5$</div>
+        <h5>Point $(0, 0)$</h5>
+        <p>$x_0 = 0,\quad y_0 = 0$</p>
+
+        <p>Substituting $(0, 0)$ into Equation (1) yields:</p>
+        $$2x^3 + 11x = 0$$
+
+        <p>
+          The real root is $x^* = 0$. Substituting into the distance formula:
+        </p>
+        $$d = \sqrt{(0 - 0)^2 + (f(0) - 0)^2}$$
+
+        <p>Since $f(0) = 0^2 + 5 = 5$, this becomes:</p>
+        $$d = \sqrt{(0 - 0)^2 + (5 - 0)^2} = 5$$
       </li>
 
       <li>
-        <strong>Point $(-4, 0)$:</strong> <br />
-        $x_0 = -4$, $y_0 = 0$ <br />
-        Substituting the coordinates of the point $(-4,0)$ into Equation (1)
-        yields:
-        <div class="equation">$2x^3 + 11x + 4 = 0$</div>
-        The real root is $x^*\approx -0.355$. Substituting this value into the
-        distance formula yields:
-        <div class="equation">
-          $d = \sqrt{(-0.355 - (-4))^2 + (f(-0.355) - 0)^2}$
-        </div>
-        Since $f(-0.355) = (-0.355)^2 + 5 \approx 5.13$, this becomes:
-        <div class="equation">
-          $d = \sqrt{(-0.355 - (-4))^2 + (5.13 - 0)^2} \approx 6.29$
-        </div>
+        <h5>Point $(-4, 0)$</h5>
+        <p>$x_0 = -4,\quad y_0 = 0$</p>
+
+        <p>Substituting $(-4, 0)$ into Equation (1) yields:</p>
+        $$2x^3 + 11x + 4 = 0$$
+
+        <p>
+          The real root is $x^* \approx -0.355$. Substituting into the distance
+          formula:
+        </p>
+        $$d = \sqrt{(-0.355 - (-4))^2 + (f(-0.355) - 0)^2}$$
+
+        <p>Since $f(-0.355) = (-0.355)^2 + 5 \approx 5.13$, this becomes:</p>
+        $$d = \sqrt{(-0.355 - (-4))^2 + (5.13 - 0)^2} \approx 6.29$$
       </li>
 
       <li>
-        <strong>Point $(-8, 0)$:</strong> <br />
-        $x_0 = -8$, $y_0 = 0$ <br />
-        Substituting the coordinates of the point $(-8,0)$ into Equation (1)
-        yields:
-        <div class="equation">$2x^3 + 11x + 8 = 0$</div>
-        The real root is $x^*\approx -0.672$. Substituting this value into the
-        distance formula yields:
-        <div class="equation">
-          $d = \sqrt{(-0.672 - (-8))^2 + (f(-0.672) - 0)^2}$
-        </div>
-        Since $f(-0.672) = (-0.672)^2 + 5 \approx 5.45$, this becomes:
-        <div class="equation">
-          $d = \sqrt{(-0.672 - (-8))^2 + (5.45 - 0)^2} \approx 9.13$
-        </div>
+        <h5>Point $(-8, 0)$</h5>
+        <p>$x_0 = -8,\quad y_0 = 0$</p>
+
+        <p>Substituting $(-8, 0)$ into Equation (1) yields:</p>
+        $$2x^3 + 11x + 8 = 0$$
+
+        <p>
+          The real root is $x^* \approx -0.672$. Substituting into the distance
+          formula:
+        </p>
+        $$d = \sqrt{(-0.672 - (-8))^2 + (f(-0.672) - 0)^2}$$
+
+        <p>Since $f(-0.672) = (-0.672)^2 + 5 \approx 5.45$, this becomes:</p>
+        $$d = \sqrt{(-0.672 - (-8))^2 + (5.45 - 0)^2} \approx 9.13$$
       </li>
 
       <li>
-        <strong>Point $(2, 0)$:</strong> <br />
-        $x_0 = 2$, $y_0 = 0$ <br />
-        Substituting the coordinates of the point $(2,0)$ into Equation (1)
-        yields:
-        <div class="equation">$2x^3 + 11x - 2 = 0$</div>
-        The real root is $x^*\approx 0.181$. Substituting this value into the
-        distance formula yields:
-        <div class="equation">
-          $d = \sqrt{(0.181 - 2)^2 + (f(0.181) - 0)^2}$
-        </div>
-        Since $f(0.181) = (0.181)^2 + 5 \approx 5.03$, this becomes:
-        <div class="equation">
-          $d = \sqrt{(0.181 - 2)^2 + (5.03 - 0)^2} \approx 5.35$
-        </div>
+        <h5>Point $(2, 0)$</h5>
+        <p>$x_0 = 2,\quad y_0 = 0$</p>
+
+        <p>Substituting $(2, 0)$ into Equation (1) yields:</p>
+        $$2x^3 + 11x - 2 = 0$$
+
+        <p>
+          The real root is $x^* \approx 0.181$. Substituting into the distance
+          formula:
+        </p>
+        $$d = \sqrt{(0.181 - 2)^2 + (f(0.181) - 0)^2}$$
+
+        <p>Since $f(0.181) = (0.181)^2 + 5 \approx 5.03$, this becomes:</p>
+        $$d = \sqrt{(0.181 - 2)^2 + (5.03 - 0)^2} \approx 5.35$$
       </li>
 
       <li>
-        <strong>Point $(6, 0)$:</strong> <br />
-        $x_0 = 6$, $y_0 = 0$ <br />
-        Substituting the coordinates of the point $(6,0)$ into Equation (1)
-        yields:
-        <div class="equation">$2x^3 + 11x - 6 = 0$</div>
-        The real root is $x^*\approx 0.520$. Substituting this value into the
-        distance formula yields:
-        <div class="equation">
-          $d = \sqrt{(0.520 - 6)^2 + (f(0.520) - 0)^2}$
-        </div>
-        Since $f(0.520) = (0.520)^2 + 5 \approx 5.27$, this becomes:
-        <div class="equation">
-          $d = \sqrt{(0.520 - 6)^2 + (5.27 - 0)^2} \approx 7.60$
-        </div>
+        <h5>Point $(6, 0)$</h5>
+        <p>$x_0 = 6,\quad y_0 = 0$</p>
+
+        <p>Substituting $(6, 0)$ into Equation (1) yields:</p>
+        $$2x^3 + 11x - 6 = 0$$
+
+        <p>
+          The real root is $x^* \approx 0.520$. Substituting into the distance
+          formula:
+        </p>
+        $$d = \sqrt{(0.520 - 6)^2 + (f(0.520) - 0)^2}$$
+
+        <p>Since $f(0.520) = (0.520)^2 + 5 \approx 5.27$, this becomes:</p>
+        $$d = \sqrt{(0.520 - 6)^2 + (5.27 - 0)^2} \approx 7.60$$
       </li>
     </ol>
 
     <p>
-      The analytical approach has now been applied to all five points, giving
-      the corresponding values of $x$ and the minimum distance for each point.
-      These results will be used as a reference when comparing them with the
-      numerical approach.
+      Table 1 summarizes the analytical results. These values serve as the
+      reference when comparing against the numerical approach.
     </p>
+
+    <table class="results">
+      <caption>
+        Table 1: Analytical results for each point
+      </caption>
+      <thead>
+        <tr>
+          <th>Point $(x_0, y_0)$</th>
+          <th>Real root $x^*$</th>
+          <th>Minimum distance $d$</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>$(0, 0)$</td>
+          <td>$0$</td>
+          <td>$5$</td>
+        </tr>
+        <tr>
+          <td>$(-4, 0)$</td>
+          <td>$\approx -0.355$</td>
+          <td>$\approx 6.29$</td>
+        </tr>
+        <tr>
+          <td>$(-8, 0)$</td>
+          <td>$\approx -0.672$</td>
+          <td>$\approx 9.13$</td>
+        </tr>
+        <tr>
+          <td>$(2, 0)$</td>
+          <td>$\approx 0.181$</td>
+          <td>$\approx 5.35$</td>
+        </tr>
+        <tr>
+          <td>$(6, 0)$</td>
+          <td>$\approx 0.520$</td>
+          <td>$\approx 7.60$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>1.3 Numerical Approach</h3>
+    <p>
+      Solving $D'(x) = 0$ symbolically can be impossible when $f(x)$ is
+      complicated. Numerical root-finding and optimization algorithms avoid this
+      by approximating the minimizer iteratively. Two algorithms are used here.
+    </p>
+
+    <h4>1.3.1 Algorithm A: Newton-Raphson Method</h4>
+    <p>
+      If the first and second derivatives of $f(x)$ are easy to compute,
+      Newton's method can be applied to $D'(x) = 0$. With $D(x) = (x - x_0)^2 +
+      (f(x) - y_0)^2$:
+    </p>
+    $$D'(x) = 2(x - x_0) + 2\,(f(x) - y_0)\,f'(x)$$ $$D''(x) = 2 + 2\,f'(x)^2 +
+    2\,(f(x) - y_0)\,f''(x)$$ $$x_{k+1} = x_k - \frac{D'(x_k)}{D''(x_k)}$$
+    <p>
+      Iteration stops when $|x_{k+1} - x_k|$ falls below a tolerance, and the
+      shortest distance is computed from the final $x$.
+    </p>
+
+    <pre><code>def find_distance_newton(x0, y0, f, df, ddf, initial_guess=0.0,
+                         tolerance=1e-7, max_iter=100):
+    x = initial_guess
+    for _ in range(max_iter):
+        # D'(x)
+        D_prime = 2 * (x - x0) + 2 * (f(x) - y0) * df(x)
+        # D''(x)
+        D_double_prime = 2 + 2 * (df(x)**2) + 2 * (f(x) - y0) * ddf(x)
+        # Newton-Raphson update step
+        next_x = x - D_prime / D_double_prime
+        if abs(next_x - x) &lt; tolerance:
+            x = next_x
+            break
+        x = next_x
+    shortest_distance = ((x - x0)**2 + (f(x) - y0)**2)**0.5
+    return shortest_distance, x</code></pre>
+
+    <h4>1.3.2 Hand Calculation for $f(x) = x^2 + 5$</h4>
+    <p>Here $f'(x) = 2x$ and $f''(x) = 2$, so for $y_0 = 0$:</p>
+    $$D'(x) = 2(x - x_0) + 4x(x^2 + 5), \qquad D''(x) = 12x^2 + 22$$
+    <p>Every run starts from the initial guess $x_0^{(0)} = 0$.</p>
+
+    <ol>
+      <li>
+        <strong>Point $(0, 0)$:</strong>
+        $$D'(0) = 0 \;\Rightarrow\; x_1 = 0 - \frac{0}{22} = 0$$
+        <p>
+          The method converges immediately: $x^* = 0$, $d = \sqrt{0 + 5^2} = 5$.
+        </p>
+        <figure>
+          <img
+            src="media/distance_0_0.png"
+            alt="Shortest distance from the point (0, 0)"
+          />
+          <figcaption>Figure 1: Shortest distance from $(0, 0)$.</figcaption>
+        </figure>
+      </li>
+
+      <li>
+        <strong>Point $(-4, 0)$:</strong>
+        <p>
+          $k=0$: $x = 0$, $D' = 8$, $D'' = 22$ $\Rightarrow$ $x_1 = -0.3636$<br />
+          $k=1$: $x = -0.3636$, $D' = -0.1923$, $D'' = 23.5868$ $\Rightarrow$
+          $x_2 = -0.3555$<br />
+          $k=2$: $x = -0.3555$, $D' = -0.0003$, $D'' = 23.5164$ $\Rightarrow$
+          $x_3 = -0.3555$
+        </p>
+        <p>
+          Converges to $x^* \approx -0.3555$, giving $d \approx 6.29$, which
+          matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/iterates_-4_0.png"
+            alt="Iterates for the point (-4, 0)"
+          />
+          <figcaption>Figure 2a: Iterates for $(-4, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/distance_-4_0.png"
+            alt="Shortest distance from the point (-4, 0)"
+          />
+          <figcaption>Figure 2b: Shortest distance from $(-4, 0)$.</figcaption>
+        </figure>
+      </li>
+
+      <li>
+        <strong>Point $(-8, 0)$:</strong>
+        <p>
+          $k=0$: $x = 0$, $D' = 16$, $D'' = 22$ $\Rightarrow$ $x_1 = -0.7273$<br />
+          $k=1$: $x = -0.7273$, $D' = -1.5387$, $D'' = 28.3471$ $\Rightarrow$
+          $x_2 = -0.6730$<br />
+          $k=2$: $x = -0.6730$, $D' = -0.0251$, $D'' = 27.4350$ $\Rightarrow$
+          $x_3 = -0.6721$
+        </p>
+        <p>
+          Converges to $x^* \approx -0.6721$, giving $d \approx 9.13$, which
+          matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/iterates_-8_0.png"
+            alt="Iterates for the point (-8, 0)"
+          />
+          <figcaption>Figure 3a: Iterates for $(-8, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/distance_-8_0.png"
+            alt="Shortest distance from the point (-8, 0)"
+          />
+          <figcaption>Figure 3b: Shortest distance from $(-8, 0)$.</figcaption>
+        </figure>
+      </li>
+
+      <li>
+        <strong>Point $(2, 0)$:</strong>
+        <p>
+          $k=0$: $x = 0$, $D' = -4$, $D'' = 22$ $\Rightarrow$ $x_1 = 0.1818$<br />
+          $k=1$: $x = 0.1818$, $D' = 0.0240$, $D'' = 22.3967$ $\Rightarrow$ $x_2
+          = 0.1807$<br />
+          $k=2$: $x = 0.1807$, $D' \approx 0$, $D'' = 22.3920$ $\Rightarrow$
+          $x_3 = 0.1807$
+        </p>
+        <p>
+          Converges to $x^* \approx 0.1807$, giving $d \approx 5.35$, which
+          matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/iterates_2_0.png"
+            alt="Iterates for the point (2, 0)"
+          />
+          <figcaption>Figure 4a: Iterates for $(2, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/distance_2_0.png"
+            alt="Shortest distance from the point (2, 0)"
+          />
+          <figcaption>Figure 4b: Shortest distance from $(2, 0)$.</figcaption>
+        </figure>
+      </li>
+
+      <li>
+        <strong>Point $(6, 0)$:</strong>
+        <p>
+          $k=0$: $x = 0$, $D' = -12$, $D'' = 22$ $\Rightarrow$ $x_1 = 0.5455$<br />
+          $k=1$: $x = 0.5455$, $D' = 0.6491$, $D'' = 25.5702$ $\Rightarrow$ $x_2
+          = 0.5201$<br />
+          $k=2$: $x = 0.5201$, $D' = 0.0042$, $D'' = 25.2457$ $\Rightarrow$ $x_3
+          = 0.5199$
+        </p>
+        <p>
+          Converges to $x^* \approx 0.5199$, giving $d \approx 7.60$, which
+          matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/iterates_6_0.png"
+            alt="Iterates for the point (6, 0)"
+          />
+          <figcaption>Figure 5a: Iterates for $(6, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/distance_6_0.png"
+            alt="Shortest distance from the point (6, 0)"
+          />
+          <figcaption>Figure 5b: Shortest distance from $(6, 0)$.</figcaption>
+        </figure>
+      </li>
+    </ol>
+
+    <p>The figures above were generated with the following Python script:</p>
+
+    <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+f = lambda x: x**2 + 5
+df = lambda x: 2 * x
+ddf = lambda x: 2
+
+def newton_steps(x0, y0, x=0.0, n_steps=3):
+    """Run a few Newton-Raphson steps on D'(x) = 0 and return every x."""
+    xs = [x]
+    for _ in range(n_steps):
+        D_prime = 2 * (x - x0) + 2 * (f(x) - y0) * df(x)
+        D_double_prime = 2 + 2 * df(x)**2 + 2 * (f(x) - y0) * ddf(x)
+        x = x - D_prime / D_double_prime
+        xs.append(x)
+    return xs
+
+def plot_iterates(x0, y0, steps, x_star):
+    """Zoomed plot: iterates on the curve, converging to x*."""
+    lo, hi = min(steps), max(steps)
+    pad = 0.15 * (hi - lo)
+    x = np.linspace(lo - pad, hi + pad, 200)
+    plt.plot(x, f(x), "b-", label="y = x^2 + 5")
+
+    # ring around the converged point
+    plt.plot(x_star, f(x_star), "o", markersize=18, markerfacecolor="none",
+             markeredgecolor="green", markeredgewidth=2,
+             label=f"x* = {x_star:.4f}")
+
+    # each iterate, labelled x0, x1, x2, x3
+    offsets = [(10, 10), (-40, 12), (12, -18), (-45, -22)]
+    for k, xk in enumerate(steps):
+        plt.plot(xk, f(xk), "ks", zorder=2)
+        plt.annotate(f"x{k}", (xk, f(xk)), textcoords="offset points",
+                     xytext=offsets[k],
+                     arrowprops=dict(arrowstyle="-", color="gray"))
+
+    plt.title(f"Iterates for point ({x0}, {y0})")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.legend()
+    plt.savefig(f"media/iterates_{x0}_{y0}.png", dpi=150)
+    plt.close()
+
+def plot_distance(x0, y0, x_star):
+    """Full plot: the point, the curve, and the shortest distance."""
+    d = np.hypot(x_star - x0, f(x_star) - y0)
+    x = np.linspace(min(x0, -1) - 1, max(x0, 1) + 1, 400)
+    plt.plot(x, f(x), "b-", label="y = x^2 + 5")
+    plt.plot(x0, y0, "ro", label=f"point ({x0}, {y0})")
+    plt.plot(x_star, f(x_star), "g*", markersize=12,
+             label=f"closest point ({x_star:.4f}, {f(x_star):.4f})")
+    plt.plot([x0, x_star], [y0, f(x_star)], "g--", label=f"d = {d:.2f}")
+    plt.title(f"Shortest distance from ({x0}, {y0})")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.ylim(-1, 15)
+    plt.legend()
+    plt.savefig(f"media/distance_{x0}_{y0}.png", dpi=150)
+    plt.close()
+
+for x0, y0 in [(0, 0), (-4, 0), (-8, 0), (2, 0), (6, 0)]:
+    steps = newton_steps(x0, y0)
+    plot_distance(x0, y0, steps[-1])
+    if steps[0] != steps[-1]:  # (0, 0) never moves, so nothing to zoom in on
+        plot_iterates(x0, y0, steps, steps[-1])</code></pre>
+
+    <h4>1.3.3 Other Functions and Non-Polynomial Cases</h4>
+    <!-- TODO: after writing the code, add results here for other polynomials and for exponential, logarithmic, radical, and rational functions. Same pattern: short trace, result, and a figure per case. -->
   </body>
 </html>

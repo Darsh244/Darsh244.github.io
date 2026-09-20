@@ -2,11 +2,11 @@ body {
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 30px;
-  font-family: Arial, sans-serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 17px;
   line-height: 1.6;
-  color: #222;
-  background-color: #fafafa;
+  color: #000;
+  background-color: #fff;
 }
 
 h1 {
@@ -29,6 +29,11 @@ h4 {
   margin-bottom: 15px;
 }
 
+h5 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
 p {
   margin: 15px 0;
 }
@@ -42,14 +47,58 @@ li {
   padding-left: 8px;
 }
 
-.equation {
-  display: inline-block;
-  margin: 12px 0 12px 25px;
-}
-
 code {
   background-color: #e8e8e8;
   padding: 2px 5px;
   border-radius: 4px;
   font-family: monospace;
+}
+
+mjx-container[display="true"] {
+  margin: 12px 0 !important;
+}
+
+/*table styles*/
+table {
+  border-collapse: collapse;
+  margin: 20px auto;
+}
+
+th,
+td {
+  padding: 6px 18px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+th {
+  border-bottom: 2px solid #000;
+}
+
+/* code block styles */
+pre {
+  background-color: #f2f2f2;
+  padding: 12px 16px;
+  overflow-x: auto;
+  font-size: 15px;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* plot styles */
+figure {
+  margin: 20px 0;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;
+}
+
+figcaption {
+  font-size: 15px;
+  margin-top: 6px;
 }
