@@ -1,0 +1,55 @@
+body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 30px;
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #222;
+  background-color: #fafafa;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+h2 {
+  margin-top: 40px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ddd;
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+h4 {
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+p {
+  margin: 15px 0;
+}
+
+ol {
+  padding-left: 30px;
+}
+
+li {
+  margin-bottom: 30px;
+  padding-left: 8px;
+}
+
+.equation {
+  display: inline-block;
+  margin: 12px 0 12px 25px;
+}
+
+code {
+  background-color: #e8e8e8;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: monospace;
+}
