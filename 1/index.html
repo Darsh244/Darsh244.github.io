@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Assignment 1</title>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+        },
+      };
+    </script>
+
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
+    ></script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <h1>Assignment 1</h1>
+    <h2>1. Part 1: Find shortest distance from a point to a function</h2>
+    <p>
+      Given a specific point $(x_0, y_0)$, there are 2 ways to find the shortest
+      distance from that point to a function $f(x)$ - analytically (using
+      calculus) or numerically (using iterative algorithms). This project will
+      solve both the analytical approach and the numerical approach for the
+      function $y = x^2 + 5$ and for the points $(0, 0), (-4, 0), (-8, 0), (2,
+      0), (6, 0)$.
+    </p>
+
+    <h3>1.1 The Objective Function</h3>
+    <p>
+      The euclidean distance d between a given point $(x_0, y_0)$ and any point
+      $(x, y)$ on a function's curve is given by: $$d = \sqrt{(x-x_0)^2 + (y -
+      y_0)^2}$$ However, because a square root is expensive to calculate,
+      computer algorithms always optimize the squared distance (D) instead.
+      $$D(x) = (x-x_0)^2 + (f(x)-y_0)^2$$ The goal of this project is to find
+      the point $x$ that minimizes $D$, which also minimizes $d$ and therefore
+      gives the shortest possible distance.
+    </p>
+
+    <h3>1.2 The Analytical Approach</h3>
+    <p>
+      Consider the function $y = f(x) = x^2 + 5$ and a specific point $(x_0,
+      y_0)$. Since this function is smooth and differentiable throughout its
+      domain, we can solve for the exact shortest distance using calculus.
+      First, we take the derivative of the squared distance function $D(x)$,
+      $$D'(x) = 2(x-x_0) + 2(f(x)-y_0)f'(x)$$ Then, we equate the derivative to
+      zero to find the critical points, ie the values of $x$ for which $D(x)$ is
+      minimum. $$ \begin{aligned} D'(x) &= 0 \\ &\implies 2(x-x_0) +
+      2(f(x)-y_0)f'(x) = 0 \\ \end{aligned} $$ Simplyfying the expression and
+      solving for x, we get, $$x = x_0 - f'(x)(f(x)-y_0)$$ For the given
+      function $f(x) = x^2 + 5$, it's derivative is $f'(x) = 2x$. Substituting
+      these values in the above expression, we have, $$ \begin{aligned} x &= x_0
+      - 2x(x^2 + 5 - y_0) \\ &\implies x = x_0 - 2x^3 - 10x + 2xy_0 \\ &\implies
+      2x^3 + 11x - 2xy_0 - x_0 = 0 \end{aligned} $$ This gives the main equation
+      that will be used to determine the minimum distance for each point in the
+      analytical approach. $$ \boxed{2x^3 + 11x - 2xy_0 - x_0 = 0} \tag{1} $$
+      For each point $(x_0, y_0)$, the general process is to substitute the
+      values of $x_0$ and $y_0$ into Equation (1). This gives the value of $x$
+      for which $D(x)$, and hence $d$, is minimized. The resulting value of $x$
+      is then substituted back into the original distance formula to obtain the
+      minimum distance.
+    </p>
+
+    <h4>1.2.1 Analytical Solutions</h4>
+    <p>
+      The <code>numpy.roots()</code> function will be used to solve Equation (1)
+      for each given point. The resulting real root gives the value of $x$ that
+      minimizes $D(x)$, which can then be substituted into the distance formula
+      to obtain the minimum distance.
+    </p>
+    <ol>
+      <li>
+        <strong>Point $(0, 0)$:</strong> <br />
+        $x_0 = 0$, $y_0 = 0$ <br />
+        Substituting the coordinates of the point $(0,0)$ into Equation (1)
+        yields:
+        <div class="equation">$2x^3 + 11x = 0$</div>
+        The real root is $x^*=0$. Substituting this value into the distance
+        formula yields:
+        <div class="equation">$d = \sqrt{(0 - 0)^2 + (f(0) - 0)^2}$</div>
+        Since $f(0) = 0^2 + 5 = 5$, this becomes:
+        <div class="equation">$d = \sqrt{(0 - 0)^2 + (5 - 0)^2} = 5$</div>
+      </li>
+
+      <li>
+        <strong>Point $(-4, 0)$:</strong> <br />
+        $x_0 = -4$, $y_0 = 0$ <br />
+        Substituting the coordinates of the point $(-4,0)$ into Equation (1)
+        yields:
+        <div class="equation">$2x^3 + 11x + 4 = 0$</div>
+        The real root is $x^*\approx -0.355$. Substituting this value into the
+        distance formula yields:
+        <div class="equation">
+          $d = \sqrt{(-0.355 - (-4))^2 + (f(-0.355) - 0)^2}$
+        </div>
+        Since $f(-0.355) = (-0.355)^2 + 5 \approx 5.13$, this becomes:
+        <div class="equation">
+          $d = \sqrt{(-0.355 - (-4))^2 + (5.13 - 0)^2} \approx 6.29$
+        </div>
+      </li>
+
+      <li>
+        <strong>Point $(-8, 0)$:</strong> <br />
+        $x_0 = -8$, $y_0 = 0$ <br />
+        Substituting the coordinates of the point $(-8,0)$ into Equation (1)
+        yields:
+        <div class="equation">$2x^3 + 11x + 8 = 0$</div>
+        The real root is $x^*\approx -0.672$. Substituting this value into the
+        distance formula yields:
+        <div class="equation">
+          $d = \sqrt{(-0.672 - (-8))^2 + (f(-0.672) - 0)^2}$
+        </div>
+        Since $f(-0.672) = (-0.672)^2 + 5 \approx 5.45$, this becomes:
+        <div class="equation">
+          $d = \sqrt{(-0.672 - (-8))^2 + (5.45 - 0)^2} \approx 9.13$
+        </div>
+      </li>
+
+      <li>
+        <strong>Point $(2, 0)$:</strong> <br />
+        $x_0 = 2$, $y_0 = 0$ <br />
+        Substituting the coordinates of the point $(2,0)$ into Equation (1)
+        yields:
+        <div class="equation">$2x^3 + 11x - 2 = 0$</div>
+        The real root is $x^*\approx 0.181$. Substituting this value into the
+        distance formula yields:
+        <div class="equation">
+          $d = \sqrt{(0.181 - 2)^2 + (f(0.181) - 0)^2}$
+        </div>
+        Since $f(0.181) = (0.181)^2 + 5 \approx 5.03$, this becomes:
+        <div class="equation">
+          $d = \sqrt{(0.181 - 2)^2 + (5.03 - 0)^2} \approx 5.35$
+        </div>
+      </li>
+
+      <li>
+        <strong>Point $(6, 0)$:</strong> <br />
+        $x_0 = 6$, $y_0 = 0$ <br />
+        Substituting the coordinates of the point $(6,0)$ into Equation (1)
+        yields:
+        <div class="equation">$2x^3 + 11x - 6 = 0$</div>
+        The real root is $x^*\approx 0.520$. Substituting this value into the
+        distance formula yields:
+        <div class="equation">
+          $d = \sqrt{(0.520 - 6)^2 + (f(0.520) - 0)^2}$
+        </div>
+        Since $f(0.520) = (0.520)^2 + 5 \approx 5.27$, this becomes:
+        <div class="equation">
+          $d = \sqrt{(0.520 - 6)^2 + (5.27 - 0)^2} \approx 7.60$
+        </div>
+      </li>
+    </ol>
+
+    <p>
+      The analytical approach has now been applied to all five points, giving
+      the corresponding values of $x$ and the minimum distance for each point.
+      These results will be used as a reference when comparing them with the
+      numerical approach.
+    </p>
+  </body>
+</html>
