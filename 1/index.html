@@ -384,75 +384,6 @@
       </li>
     </ol>
 
-    <p>The figures above were generated with the following Python script:</p>
-
-    <pre><code>import numpy as np
-import matplotlib.pyplot as plt
-
-f = lambda x: x**2 + 5
-df = lambda x: 2 * x
-ddf = lambda x: 2
-
-def newton_steps(x0, y0, x=0.0, n_steps=3):
-    """Run a few Newton-Raphson steps on D'(x) = 0 and return every x."""
-    xs = [x]
-    for _ in range(n_steps):
-        D_prime = 2 * (x - x0) + 2 * (f(x) - y0) * df(x)
-        D_double_prime = 2 + 2 * df(x)**2 + 2 * (f(x) - y0) * ddf(x)
-        x = x - D_prime / D_double_prime
-        xs.append(x)
-    return xs
-
-def plot_iterates(x0, y0, steps, x_star):
-    """Zoomed plot: iterates on the curve, converging to x*."""
-    lo, hi = min(steps), max(steps)
-    pad = 0.15 * (hi - lo)
-    x = np.linspace(lo - pad, hi + pad, 200)
-    plt.plot(x, f(x), "b-", label="y = x^2 + 5")
-
-    # ring around the converged point
-    plt.plot(x_star, f(x_star), "o", markersize=18, markerfacecolor="none",
-             markeredgecolor="green", markeredgewidth=2,
-             label=f"x* = {x_star:.4f}")
-
-    # each iterate, labelled x0, x1, x2, x3
-    offsets = [(10, 10), (-40, 12), (12, -18), (-45, -22)]
-    for k, xk in enumerate(steps):
-        plt.plot(xk, f(xk), "ks", zorder=2)
-        plt.annotate(f"x{k}", (xk, f(xk)), textcoords="offset points",
-                     xytext=offsets[k],
-                     arrowprops=dict(arrowstyle="-", color="gray"))
-
-    plt.title(f"Iterates for point ({x0}, {y0})")
-    plt.xlabel("x")
-    plt.ylabel("y")
-    plt.legend()
-    plt.savefig(f"media/iterates_{x0}_{y0}.png", dpi=150)
-    plt.close()
-
-def plot_distance(x0, y0, x_star):
-    """Full plot: the point, the curve, and the shortest distance."""
-    d = np.hypot(x_star - x0, f(x_star) - y0)
-    x = np.linspace(min(x0, -1) - 1, max(x0, 1) + 1, 400)
-    plt.plot(x, f(x), "b-", label="y = x^2 + 5")
-    plt.plot(x0, y0, "ro", label=f"point ({x0}, {y0})")
-    plt.plot(x_star, f(x_star), "g*", markersize=12,
-             label=f"closest point ({x_star:.4f}, {f(x_star):.4f})")
-    plt.plot([x0, x_star], [y0, f(x_star)], "g--", label=f"d = {d:.2f}")
-    plt.title(f"Shortest distance from ({x0}, {y0})")
-    plt.xlabel("x")
-    plt.ylabel("y")
-    plt.ylim(-1, 15)
-    plt.legend()
-    plt.savefig(f"media/distance_{x0}_{y0}.png", dpi=150)
-    plt.close()
-
-for x0, y0 in [(0, 0), (-4, 0), (-8, 0), (2, 0), (6, 0)]:
-    steps = newton_steps(x0, y0)
-    plot_distance(x0, y0, steps[-1])
-    if steps[0] != steps[-1]:  # (0, 0) never moves, so nothing to zoom in on
-        plot_iterates(x0, y0, steps, steps[-1])</code></pre>
-
     <h4>1.3.3 Other Functions and Non-Polynomial Cases</h4>
     <p>
       <code>find_distance_newton</code> takes $f$, $f'$ and $f''$ as inputs, so
@@ -535,53 +466,411 @@ for x0, y0 in [(0, 0), (-4, 0), (-8, 0), (2, 0), (6, 0)]:
       the true minimum.
     </p>
 
+    <h4>1.3.4 Algorithm B: Golden Section Search</h4>
     <p>
-      The results and figures above were produced with the following script:
+      If the derivatives of $f(x)$ are unknown but the search can be restricted
+      to an interval $[a, b]$ containing the minimum, Golden Section Search
+      finds the minimum of $D(x) = (x - x_0)^2 + (f(x) - y_0)^2$ using only
+      function values. It requires $D$ to have a single minimum inside $[a, b]$.
+    </p>
+    <p>
+      Two interior points are placed using the golden ratio $\varphi = \frac{1 +
+      \sqrt{5}}{2}$, with $\text{resphi} = 2 - \varphi \approx 0.3820$:
+    </p>
+    $$x_1 = a + \text{resphi}\,(b - a), \qquad x_2 = b - \text{resphi}\,(b -
+    a)$$
+    <p>
+      If $D(x_1) &lt; D(x_2)$ the minimum lies in $[a, x_2]$, so $b = x_2$;
+      otherwise it lies in $[x_1, b]$, so $a = x_1$. Each step shrinks the
+      interval by a factor of about $0.618$ and reuses one interior point, so
+      only one new evaluation of $D$ is needed per iteration. The search stops
+      when $b - a$ falls below a tolerance, and the result is the midpoint $x^*
+      = (a + b)/2$.
     </p>
 
-    <pre><code>import numpy as np
-import matplotlib.pyplot as plt
+    <pre><code>import math
 
-# find_distance_newton is the same function as in Section 1.3.1
+def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
+    phi = (1 + math.sqrt(5)) / 2
+    resphi = 2 - phi
+    x1 = a + resphi * (b - a)
+    x2 = b - resphi * (b - a)
+    def dist_sq(x): return (x - x0)**2 + (f(x) - y0)**2
+    f_x1 = dist_sq(x1)
+    f_x2 = dist_sq(x2)
+    while abs(b - a) &gt; tolerance:
+        if f_x1 &lt; f_x2:
+            b = x2
+            x2 = x1
+            f_x2 = f_x1
+            x1 = a + resphi * (b - a)
+            f_x1 = dist_sq(x1)
+        else:
+            a = x1
+            x1 = x2
+            f_x1 = f_x2
+            x2 = b - resphi * (b - a)
+            f_x2 = dist_sq(x2)
+    best_x = (a + b) / 2
+    return math.sqrt(dist_sq(best_x)), best_x</code></pre>
 
-def run_case(name, label, f, df, ddf, guess, points, xlim, ylim):
-    """Find the shortest distance for each point and plot the results."""
-    x = np.linspace(*xlim, 400)
-    plt.plot(x, f(x), "b-", label=f"y = {label}")
+    <h4>1.3.5 Hand Calculation for $f(x) = x^2 + 5$</h4>
+    <p>
+      For $y_0 = 0$, $D(x) = (x - x_0)^2 + (x^2 + 5)^2$. Since $D''(x) = 12x^2 +
+      22 &gt; 0$ (Section 1.3.2), $D$ has a single minimum, as the method
+      requires. Every run searches the interval $[a, b] = [-2, 2]$.
+    </p>
 
-    for x0, y0 in points:
-        d, x_star = find_distance_newton(x0, y0, f, df, ddf, initial_guess=guess)
-        y_star = f(x_star)
-        print(f"{label:10s} ({x0}, {y0}): x* = {x_star:.4f}, "
-              f"closest = ({x_star:.4f}, {y_star:.4f}), d = {d:.4f}")
+    <ol>
+      <li>
+        <strong>Point $(0, 0)$:</strong>
+        <p>
+          $k=0$: $[a, b] = [-2, 2]$, $x_1 = -0.4721$, $x_2 = 0.4721$, $D(x_1) =
+          27.5017$, $D(x_2) = 27.5017$ $\Rightarrow$ $a = x_1$ (tie)<br />
+          $k=1$: $[a, b] = [-0.4721, 2]$, $x_1 = 0.4721$, $x_2 = 1.0557$,
+          $D(x_1) = 27.5017$, $D(x_2) = 38.5024$ $\Rightarrow$ $b = x_2$<br />
+          $k=2$: $[a, b] = [-0.4721, 1.0557]$, $x_1 = 0.1115$, $x_2 = 0.4721$,
+          $D(x_1) = 25.1368$, $D(x_2) = 27.5017$ $\Rightarrow$ $b = x_2$<br />
+          $k=3$: $[a, b] = [-0.4721, 0.4721]$, $x_1 = -0.1115$, $x_2 = 0.1115$,
+          $D(x_1) = 25.1368$, $D(x_2) = 25.1368$ $\Rightarrow$ $a = x_1$ (tie)
+        </p>
+        <p>
+          Here $D$ is symmetric about $x = 0$, so the two values tie whenever
+          the bracket is symmetric; the code sends ties to $a = x_1$.
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0$, $d
+          \approx 5$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_0_0.png"
+            alt="Golden section brackets for the point (0, 0)"
+          />
+          <figcaption>Figure 9a: Bracket shrinking for $(0, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_0_0.png"
+            alt="Shortest distance from the point (0, 0)"
+          />
+          <figcaption>Figure 9b: Shortest distance from $(0, 0)$.</figcaption>
+        </figure>
+      </li>
 
-        plt.plot(x0, y0, "ro")                        # the query point
-        plt.plot(x_star, y_star, "g*", markersize=12)  # closest point on curve
-        plt.plot([x0, x_star], [y0, y_star], "g--",
-                 label=f"({x0}, {y0}): d = {d:.2f}")
+      <li>
+        <strong>Point $(-4, 0)$:</strong>
+        <p>
+          $k=0$: $[a, b] = [-2, 2]$, $x_1 = -0.4721$, $x_2 = 0.4721$, $D(x_1) =
+          39.7246$, $D(x_2) = 47.2788$ $\Rightarrow$ $b = x_2$<br />
+          $k=1$: $[a, b] = [-2, 0.4721]$, $x_1 = -1.0557$, $x_2 = -0.4721$,
+          $D(x_1) = 46.0566$, $D(x_2) = 39.7246$ $\Rightarrow$ $a = x_1$<br />
+          $k=2$: $[a, b] = [-1.0557, 0.4721]$, $x_1 = -0.4721$, $x_2 = -0.1115$,
+          $D(x_1) = 39.7246$, $D(x_2) = 40.2452$ $\Rightarrow$ $b = x_2$<br />
+          $k=3$: $[a, b] = [-1.0557, -0.1115]$, $x_1 = -0.6950$, $x_2 =
+          -0.4721$, $D(x_1) = 40.9870$, $D(x_2) = 39.7246$ $\Rightarrow$ $a =
+          x_1$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx -0.3555$, $d
+          \approx 6.29$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_-4_0.png"
+            alt="Golden section brackets for the point (-4, 0)"
+          />
+          <figcaption>Figure 10a: Bracket shrinking for $(-4, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_-4_0.png"
+            alt="Shortest distance from the point (-4, 0)"
+          />
+          <figcaption>Figure 10b: Shortest distance from $(-4, 0)$.</figcaption>
+        </figure>
+      </li>
 
-    plt.title(f"Shortest distance to y = {label}")
-    plt.xlabel("x")
-    plt.ylabel("y")
-    plt.xlim(*xlim)
-    plt.ylim(*ylim)
-    plt.gca().set_aspect("equal")
-    plt.legend(loc="best")
-    plt.savefig(f"media/{name}.png", dpi=150)
-    plt.close()
+      <li>
+        <strong>Point $(-8, 0)$:</strong>
+        <p>
+          $k=0$: $[a, b] = [-2, 2]$, $x_1 = -0.4721$, $x_2 = 0.4721$, $D(x_1) =
+          83.9476$, $D(x_2) = 99.0559$ $\Rightarrow$ $b = x_2$<br />
+          $k=1$: $[a, b] = [-2, 0.4721]$, $x_1 = -1.0557$, $x_2 = -0.4721$,
+          $D(x_1) = 85.6108$, $D(x_2) = 83.9476$ $\Rightarrow$ $a = x_1$<br />
+          $k=2$: $[a, b] = [-1.0557, 0.4721]$, $x_1 = -0.4721$, $x_2 = -0.1115$,
+          $D(x_1) = 83.9476$, $D(x_2) = 87.3535$ $\Rightarrow$ $b = x_2$<br />
+          $k=3$: $[a, b] = [-1.0557, -0.1115]$, $x_1 = -0.6950$, $x_2 =
+          -0.4721$, $D(x_1) = 83.4266$, $D(x_2) = 83.9476$ $\Rightarrow$ $b =
+          x_2$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx -0.6721$, $d
+          \approx 9.13$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_-8_0.png"
+            alt="Golden section brackets for the point (-8, 0)"
+          />
+          <figcaption>Figure 11a: Bracket shrinking for $(-8, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_-8_0.png"
+            alt="Shortest distance from the point (-8, 0)"
+          />
+          <figcaption>Figure 11b: Shortest distance from $(-8, 0)$.</figcaption>
+        </figure>
+      </li>
 
-# other polynomial: f(x) = x^3/4 - x
-run_case("cubic", "x^3/4 - x",
-         lambda x: x**3 / 4 - x, lambda x: 3 * x**2 / 4 - 1, lambda x: 3 * x / 2,
-         0.0, [(4, 0), (-4, 2)], (-5, 5), (-5, 5))
+      <li>
+        <strong>Point $(2, 0)$:</strong>
+        <p>
+          $k=0$: $[a, b] = [-2, 2]$, $x_1 = -0.4721$, $x_2 = 0.4721$, $D(x_1) =
+          33.3903$, $D(x_2) = 29.6132$ $\Rightarrow$ $a = x_1$<br />
+          $k=1$: $[a, b] = [-0.4721, 2]$, $x_1 = 0.4721$, $x_2 = 1.0557$,
+          $D(x_1) = 29.6132$, $D(x_2) = 38.2795$ $\Rightarrow$ $b = x_2$<br />
+          $k=2$: $[a, b] = [-0.4721, 1.0557]$, $x_1 = 0.1115$, $x_2 = 0.4721$,
+          $D(x_1) = 28.6910$, $D(x_2) = 29.6132$ $\Rightarrow$ $b = x_2$<br />
+          $k=3$: $[a, b] = [-0.4721, 0.4721]$, $x_1 = -0.1115$, $x_2 = 0.1115$,
+          $D(x_1) = 29.5826$, $D(x_2) = 28.6910$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0.1807$, $d
+          \approx 5.35$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_2_0.png"
+            alt="Golden section brackets for the point (2, 0)"
+          />
+          <figcaption>Figure 12a: Bracket shrinking for $(2, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_2_0.png"
+            alt="Shortest distance from the point (2, 0)"
+          />
+          <figcaption>Figure 12b: Shortest distance from $(2, 0)$.</figcaption>
+        </figure>
+      </li>
 
-# exponential: f(x) = e^x
-run_case("exp", "e^x", np.exp, np.exp, np.exp,
-         0.0, [(2, 0), (0, -2)], (-3, 4), (-3, 6))
+      <li>
+        <strong>Point $(6, 0)$:</strong>
+        <p>
+          $k=0$: $[a, b] = [-2, 2]$, $x_1 = -0.4721$, $x_2 = 0.4721$, $D(x_1) =
+          69.1674$, $D(x_2) = 57.8361$ $\Rightarrow$ $a = x_1$<br />
+          $k=1$: $[a, b] = [-0.4721, 2]$, $x_1 = 0.4721$, $x_2 = 1.0557$,
+          $D(x_1) = 57.8361$, $D(x_2) = 61.8337$ $\Rightarrow$ $b = x_2$<br />
+          $k=2$: $[a, b] = [-0.4721, 1.0557]$, $x_1 = 0.1115$, $x_2 = 0.4721$,
+          $D(x_1) = 59.7993$, $D(x_2) = 57.8361$ $\Rightarrow$ $a = x_1$<br />
+          $k=3$: $[a, b] = [0.1115, 1.0557]$, $x_1 = 0.4721$, $x_2 = 0.6950$,
+          $D(x_1) = 57.8361$, $D(x_2) = 58.2068$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0.5199$, $d
+          \approx 7.60$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_6_0.png"
+            alt="Golden section brackets for the point (6, 0)"
+          />
+          <figcaption>Figure 13a: Bracket shrinking for $(6, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_6_0.png"
+            alt="Shortest distance from the point (6, 0)"
+          />
+          <figcaption>Figure 13b: Shortest distance from $(6, 0)$.</figcaption>
+        </figure>
+      </li>
+    </ol>
 
-# radical: f(x) = sqrt(x)  (needs a positive initial guess)
-run_case("sqrt", "sqrt(x)",
-         np.sqrt, lambda x: 0.5 / np.sqrt(x), lambda x: -0.25 * x**-1.5,
-         1.0, [(4, 0), (2, 3)], (0, 8), (-1, 4))</code></pre>
+    <h4>1.3.6 Other Functions and Non-Polynomial Cases</h4>
+    <p>
+      <code>golden_section_search</code> only needs $f$ itself and a search
+      interval $[a, b]$, so no derivatives are required. Three more cases are
+      shown: a quartic polynomial, a logarithmic function, and a function with a
+      variable in the denominator. The last two are only defined for $x &gt; 0$,
+      so their interval starts slightly above zero.
+    </p>
+
+    <ol>
+      <li>
+        <strong>Polynomial: $f(x) = \frac{1}{4}x^4 - x^2$</strong>
+        <p>Search interval: $[-4, 4]$.</p>
+        <p>
+          Point $(3, 0)$: $x^* \approx 2.0496$, closest point $(2.0496,\
+          0.2107)$, $d \approx 0.9735$<br />
+          Point $(-3, -1)$: $x^* \approx -1.8343$, closest point $(-1.8343,\
+          -0.5344)$, $d \approx 1.2552$
+        </p>
+        <figure>
+          <img
+            src="media/golden_quartic.png"
+            alt="Shortest distance from (3, 0) and (-3, -1) to y = x^4/4 - x^2"
+          />
+          <figcaption>
+            Figure 14: Shortest distance to $f(x) = \frac{1}{4}x^4 - x^2$.
+          </figcaption>
+        </figure>
+      </li>
+
+      <li>
+        <strong>Logarithmic: $f(x) = \ln x$</strong>
+        <p>Search interval: $[0.05, 10]$.</p>
+        <p>
+          Point $(2, 3)$: $x^* \approx 2.7307$, closest point $(2.7307,\
+          1.0046)$, $d \approx 2.1250$<br />
+          Point $(5, -1)$: $x^* \approx 4.4390$, closest point $(4.4390,\
+          1.4904)$, $d \approx 2.5528$
+        </p>
+        <figure>
+          <img
+            src="media/golden_log.png"
+            alt="Shortest distance from (2, 3) and (5, -1) to y = ln(x)"
+          />
+          <figcaption>
+            Figure 15: Shortest distance to $f(x) = \ln x$.
+          </figcaption>
+        </figure>
+      </li>
+
+      <li>
+        <strong>Reciprocal: $f(x) = \frac{1}{x}$</strong>
+        <p>Search interval: $[0.05, 10]$.</p>
+        <p>
+          Point $(2, 0)$: $x^* \approx 2.1069$, closest point $(2.1069,\
+          0.4746)$, $d \approx 0.4865$<br />
+          Point $(1, 3)$: $x^* \approx 0.3421$, closest point $(0.3421,\
+          2.9230)$, $d \approx 0.6624$
+        </p>
+        <figure>
+          <img
+            src="media/golden_reciprocal.png"
+            alt="Shortest distance from (2, 0) and (1, 3) to y = 1/x"
+          />
+          <figcaption>
+            Figure 16: Shortest distance to $f(x) = \frac{1}{x}$.
+          </figcaption>
+        </figure>
+      </li>
+    </ol>
+
+    <p>
+      Golden Section Search assumes $D$ has a single minimum inside $[a, b]$.
+      For a curve with more than one well, like the quartic, the interval and
+      points have to be chosen so that only one minimum is in range; otherwise
+      the method may converge to a different local minimum. The cases above
+      satisfy this.
+    </p>
+
+    <h2> 2. Part 2: Fitting to an equation</h3>
+    <p>
+      We are given the points $(0, 0.5)$, $(2, 3.5)$, $(1, 1.5)$, $(3, 7.5)$,
+      and want to fit a line $y^*(x) = c_0 + c_1 x$, and a parabola $y^*(x) = c_0 + c_1x + c_2x^2$ 
+      by minimizing the min squared error of the fitted functions.
+    </p>
+
+    <h3> 2.1 Fitting a line</h3>
+
+    <p>The error at each point is:</p>
+    $$e(x) = y^*(x) - y(x) = c_0 + c_1 x - y(x)$$
+    <p>
+      We want $c_0, c_1$ that minimize the min squared error over all
+      points:
+    </p>
+    $$P(c_0, c_1) = \sum \|e(x)\|_2^2$$
+    <p>Substituting the four points:</p>
+    $$P(c_0, c_1) = (c_0 - 0.5)^2 + (c_0 + 2c_1 - 3.5)^2 + (c_0 + c_1 - 1.5)^2 +
+    (c_0 + 3c_1 - 7.5)^2$$
+
+    <h4>2.1.2 Analytical Solution</h4>
+    <p>Setting the partial derivatives to zero:</p>
+    $$\frac{\partial P}{\partial c_0} = 0 \;\Rightarrow\; 2(c_0 - 0.5) + 2(c_0 +
+    2c_1 - 3.5) + 2(c_0 + c_1 - 1.5) + 2(c_0 + 3c_1 - 7.5) = 0$$ $$\Rightarrow\;
+    8c_0 + 12c_1 = 26 \;\Rightarrow\; 4c_0 + 6c_1 = 13$$ $$\frac{\partial
+    P}{\partial c_1} = 0 \;\Rightarrow\; 2(c_0 + 2c_1 - 3.5)(2) + 2(c_0 + c_1 -
+    1.5) + 2(c_0 + 3c_1 - 7.5)(3) = 0$$ $$\Rightarrow\; 12c_0 + 28c_1 = 62
+    \;\Rightarrow\; 6c_0 + 14c_1 = 31$$
+    <p>Solving these two equations simultaneously:</p>
+    $$c_1 = 2.3, \qquad c_0 = -0.2$$ $$y^*(x) = -0.2 + 2.3x$$
+    <p>The minimum  squared error is $P(-0.2, 2.3) = 2.3$</p>
+
+    <figure>
+      <img
+        src="media/line_analytical_fit.png"
+        alt="Analytical line fit against the data points"
+      />
+      <figcaption>
+        Figure 1: Analytical line fit compared to the data points.
+      </figcaption>
+    </figure>
+
+    <h4>2.1.3 Numerical Solution: Newton-Raphson</h4>
+    <p>
+      From $8c_0 + 12c_1 = 26$ and $12c_0 + 28c_1 = 62$, the partial derivatives
+      and second partials are:
+    </p>
+    $$\frac{\partial P}{\partial c_0} = 8c_0 + 12c_1 - 26, \qquad
+    \frac{\partial^2 P}{\partial c_0^2} = 8$$ $$\frac{\partial P}{\partial c_1}
+    = 12c_0 + 28c_1 - 62, \qquad \frac{\partial^2 P}{\partial c_1^2} = 28$$
+    <p>
+      Each iteration optimizes one parameter at a time: first $c_0$ using the
+      current value of $c_1$, then $c_1$ using the just-updated $c_0$:
+    </p>
+    $$c_0^{(n+1)} = c_0^{(n)} - \frac{\partial P(c_0^{(n)}, c_1^{(n)})/\partial
+    c_0}{\partial^2 P/\partial c_0^2} = c_0^{(n)} - \frac{8c_0^{(n)} +
+    12c_1^{(n)} - 26}{8}$$ $$c_1^{(n+1)} = c_1^{(n)} - \frac{\partial
+    P(c_0^{(n+1)}, c_1^{(n)})/\partial c_1}{\partial^2 P/\partial c_1^2} =
+    c_1^{(n)} - \frac{12c_0^{(n+1)} + 28c_1^{(n)} - 62}{28}$$
+    <p>Initial guess: $(c_0^{(0)}, c_1^{(0)}) = (0, 0)$.</p>
+
+    <ol>
+      <li>
+        <strong>Iteration 1:</strong>
+        $$c_0^{(1)} = 0 - \frac{-26}{8} = 3.25$$ $$c_1^{(1)} = 0 -
+        \frac{12(3.25) - 62}{28} = \frac{23}{28} \approx 0.821$$
+      </li>
+      <li>
+        <strong>Iteration 2:</strong>
+        $$c_0^{(2)} = 3.25 - \frac{8(3.25) + 12(0.821) - 26}{8} \approx 2.02$$
+        $$c_1^{(2)} = 0.821 - \frac{12(2.02) + 28(0.821) - 62}{28} \approx
+        1.349$$
+      </li>
+      <li>
+        <strong>Iteration 3:</strong>
+        $$c_0^{(3)} \approx 2.02 - \frac{8(2.02) + 12(1.349) - 26}{8} \approx
+        1.226$$ $$c_1^{(3)} \approx 1.349 - \frac{12(1.226) + 28(1.349) -
+        62}{28} \approx 1.689$$
+      </li>
+      <li>
+        <strong>Iteration 4:</strong>
+        $$c_0^{(4)} \approx 0.717, \qquad c_1^{(4)} \approx 1.907$$
+      </li>
+      <li>
+        <strong>Iteration 5:</strong>
+        $$c_0^{(5)} \approx 0.389, \qquad c_1^{(5)} \approx 2.047$$
+      </li>
+    </ol>
+
+    <p>
+      The iterates are steadily approaching the analytical solution $(c_0, c_1)
+      = (-0.2, 2.3)$, and continuing this process converges to it exactly.
+    </p>
+
+    <figure>
+      <img
+        src="media/line_newton_convergence.png"
+        alt="Convergence of c0 and c1 across Newton-Raphson iterations"
+      />
+      <figcaption>
+        Figure 2: Newton-Raphson convergence of $c_0$ and $c_1$ toward the
+        analytical values.
+      </figcaption>
+    </figure>
   </body>
 </html>
