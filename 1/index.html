@@ -246,200 +246,200 @@
     shortest_distance = ((x - x0)**2 + (f(x) - y0)**2)**0.5
     return shortest_distance, x</code></pre>
 
-    <h4>1.3.2 Hand Calculation for $f(x) = x^2 + 5$</h4>
+    <h4>1.3.2 Worked Solution for $f(x) = x^2 + 5$</h4>
     <p>Here $f'(x) = 2x$ and $f''(x) = 2$, so for $y_0 = 0$:</p>
     $$D'(x) = 2(x - x_0) + 4x(x^2 + 5), \qquad D''(x) = 12x^2 + 22$$
     <p>Every run starts from the initial guess $x_0^{(0)} = 0$.</p>
 
     <ol>
-  <li>
-    <strong>Point $(0, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $D'(0) = 2(0 - 0) + 4(0)(0^2 + 5) = 0$<br />
-      $D''(0) = 12(0)^2 + 22 = 22$<br />
-      $x_1 = 0 - \dfrac{0}{22} = 0$
-    </p>
-    <p>
-      The method converges immediately: $x^* = 0$, $d = \sqrt{0 + 5^2} = 5$.
-    </p>
-    <figure>
-      <img
-        src="media/distance_0_0.png"
-        alt="Shortest distance from the point (0, 0)"
-      />
-      <figcaption>Figure 1: Shortest distance from $(0, 0)$.</figcaption>
-    </figure>
-  </li>
+      <li>
+        <strong>Point $(0, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $D'(0) = 2(0 - 0) + 4(0)(0^2 + 5) = 0$<br />
+          $D''(0) = 12(0)^2 + 22 = 22$<br />
+          $x_1 = 0 - \dfrac{0}{22} = 0$
+        </p>
+        <p>
+          The method converges immediately: $x^* = 0$, $d = \sqrt{0 + 5^2} = 5$.
+        </p>
+        <figure>
+          <img
+            src="media/distance_0_0.png"
+            alt="Shortest distance from the point (0, 0)"
+          />
+          <figcaption>Figure 1: Shortest distance from $(0, 0)$.</figcaption>
+        </figure>
+      </li>
 
-  <li>
-    <strong>Point $(-4, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $x = 0$<br />
-      $D'(0) = 2(0-(-4)) + 4(0)(0^2+5) = 8$<br />
-      $D''(0) = 12(0)^2 + 22 = 22$<br />
-      $x_1 = 0 - \dfrac{8}{22} \approx -0.3636$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $x = -0.3636$<br />
-      $D'(-0.3636) = 2(-0.3636-(-4)) + 4(-0.3636)((-0.3636)^2+5) \approx -0.1923$<br />
-      $D''(-0.3636) = 12(-0.3636)^2 + 22 \approx 23.5868$<br />
-      $x_2 = -0.3636 - \dfrac{-0.1923}{23.5868} \approx -0.3555$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $x = -0.3555$<br />
-      $D'(-0.3555) \approx -0.0003$, $D''(-0.3555) \approx 23.5164$<br />
-      $x_3 = -0.3555 - \dfrac{-0.0003}{23.5164} \approx -0.3555$
-    </p>
-    <p>
-      Converges to $x^* \approx -0.3555$, giving $d \approx 6.29$, which
-      matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/iterates_-4_0.png"
-        alt="Iterates for the point (-4, 0)"
-      />
-      <figcaption>Figure 2a: Iterates for $(-4, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/distance_-4_0.png"
-        alt="Shortest distance from the point (-4, 0)"
-      />
-      <figcaption>Figure 2b: Shortest distance from $(-4, 0)$.</figcaption>
-    </figure>
-  </li>
+      <li>
+        <strong>Point $(-4, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $x = 0$<br />
+          $D'(0) = 2(0-(-4)) + 4(0)(0^2+5) = 8$<br />
+          $D''(0) = 12(0)^2 + 22 = 22$<br />
+          $x_1 = 0 - \dfrac{8}{22} \approx -0.3636$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $x = -0.3636$<br />
+          $D'(-0.3636) = 2(-0.3636-(-4)) + 4(-0.3636)((-0.3636)^2+5) \approx -0.1923$<br />
+          $D''(-0.3636) = 12(-0.3636)^2 + 22 \approx 23.5868$<br />
+          $x_2 = -0.3636 - \dfrac{-0.1923}{23.5868} \approx -0.3555$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $x = -0.3555$<br />
+          $D'(-0.3555) \approx -0.0003$, $D''(-0.3555) \approx 23.5164$<br />
+          $x_3 = -0.3555 - \dfrac{-0.0003}{23.5164} \approx -0.3555$
+        </p>
+        <p>
+          Converges to $x^* \approx -0.3555$, giving $d \approx 6.29$, which
+          matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/iterates_-4_0.png"
+            alt="Iterates for the point (-4, 0)"
+          />
+          <figcaption>Figure 2a: Iterates for $(-4, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/distance_-4_0.png"
+            alt="Shortest distance from the point (-4, 0)"
+          />
+          <figcaption>Figure 2b: Shortest distance from $(-4, 0)$.</figcaption>
+        </figure>
+      </li>
 
-  <li>
-    <strong>Point $(-8, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $x = 0$<br />
-      $D'(0) = 2(0-(-8)) + 4(0)(0^2+5) = 16$<br />
-      $D''(0) = 12(0)^2 + 22 = 22$<br />
-      $x_1 = 0 - \dfrac{16}{22} \approx -0.7273$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $x = -0.7273$<br />
-      $D'(-0.7273) = 2(-0.7273-(-8)) + 4(-0.7273)((-0.7273)^2+5) \approx -1.5387$<br />
-      $D''(-0.7273) = 12(-0.7273)^2 + 22 \approx 28.3471$<br />
-      $x_2 = -0.7273 - \dfrac{-1.5387}{28.3471} \approx -0.6730$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $x = -0.6730$<br />
-      $D'(-0.6730) \approx -0.0251$, $D''(-0.6730) \approx 27.4350$<br />
-      $x_3 = -0.6730 - \dfrac{-0.0251}{27.4350} \approx -0.6721$
-    </p>
-    <p>
-      Converges to $x^* \approx -0.6721$, giving $d \approx 9.13$, which
-      matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/iterates_-8_0.png"
-        alt="Iterates for the point (-8, 0)"
-      />
-      <figcaption>Figure 3a: Iterates for $(-8, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/distance_-8_0.png"
-        alt="Shortest distance from the point (-8, 0)"
-      />
-      <figcaption>Figure 3b: Shortest distance from $(-8, 0)$.</figcaption>
-    </figure>
-  </li>
+      <li>
+        <strong>Point $(-8, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $x = 0$<br />
+          $D'(0) = 2(0-(-8)) + 4(0)(0^2+5) = 16$<br />
+          $D''(0) = 12(0)^2 + 22 = 22$<br />
+          $x_1 = 0 - \dfrac{16}{22} \approx -0.7273$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $x = -0.7273$<br />
+          $D'(-0.7273) = 2(-0.7273-(-8)) + 4(-0.7273)((-0.7273)^2+5) \approx -1.5387$<br />
+          $D''(-0.7273) = 12(-0.7273)^2 + 22 \approx 28.3471$<br />
+          $x_2 = -0.7273 - \dfrac{-1.5387}{28.3471} \approx -0.6730$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $x = -0.6730$<br />
+          $D'(-0.6730) \approx -0.0251$, $D''(-0.6730) \approx 27.4350$<br />
+          $x_3 = -0.6730 - \dfrac{-0.0251}{27.4350} \approx -0.6721$
+        </p>
+        <p>
+          Converges to $x^* \approx -0.6721$, giving $d \approx 9.13$, which
+          matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/iterates_-8_0.png"
+            alt="Iterates for the point (-8, 0)"
+          />
+          <figcaption>Figure 3a: Iterates for $(-8, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/distance_-8_0.png"
+            alt="Shortest distance from the point (-8, 0)"
+          />
+          <figcaption>Figure 3b: Shortest distance from $(-8, 0)$.</figcaption>
+        </figure>
+      </li>
 
-  <li>
-    <strong>Point $(2, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $x = 0$<br />
-      $D'(0) = 2(0-2) + 4(0)(0^2+5) = -4$<br />
-      $D''(0) = 12(0)^2 + 22 = 22$<br />
-      $x_1 = 0 - \dfrac{-4}{22} \approx 0.1818$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $x = 0.1818$<br />
-      $D'(0.1818) = 2(0.1818-2) + 4(0.1818)((0.1818)^2+5) \approx 0.0240$<br />
-      $D''(0.1818) = 12(0.1818)^2 + 22 \approx 22.3967$<br />
-      $x_2 = 0.1818 - \dfrac{0.0240}{22.3967} \approx 0.1807$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $x = 0.1807$<br />
-      $D'(0.1807) \approx 0$, $D''(0.1807) \approx 22.3920$<br />
-      $x_3 = 0.1807 - \dfrac{0}{22.3920} \approx 0.1807$
-    </p>
-    <p>
-      Converges to $x^* \approx 0.1807$, giving $d \approx 5.35$, which
-      matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/iterates_2_0.png"
-        alt="Iterates for the point (2, 0)"
-      />
-      <figcaption>Figure 4a: Iterates for $(2, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/distance_2_0.png"
-        alt="Shortest distance from the point (2, 0)"
-      />
-      <figcaption>Figure 4b: Shortest distance from $(2, 0)$.</figcaption>
-    </figure>
-  </li>
+      <li>
+        <strong>Point $(2, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $x = 0$<br />
+          $D'(0) = 2(0-2) + 4(0)(0^2+5) = -4$<br />
+          $D''(0) = 12(0)^2 + 22 = 22$<br />
+          $x_1 = 0 - \dfrac{-4}{22} \approx 0.1818$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $x = 0.1818$<br />
+          $D'(0.1818) = 2(0.1818-2) + 4(0.1818)((0.1818)^2+5) \approx 0.0240$<br />
+          $D''(0.1818) = 12(0.1818)^2 + 22 \approx 22.3967$<br />
+          $x_2 = 0.1818 - \dfrac{0.0240}{22.3967} \approx 0.1807$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $x = 0.1807$<br />
+          $D'(0.1807) \approx 0$, $D''(0.1807) \approx 22.3920$<br />
+          $x_3 = 0.1807 - \dfrac{0}{22.3920} \approx 0.1807$
+        </p>
+        <p>
+          Converges to $x^* \approx 0.1807$, giving $d \approx 5.35$, which
+          matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/iterates_2_0.png"
+            alt="Iterates for the point (2, 0)"
+          />
+          <figcaption>Figure 4a: Iterates for $(2, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/distance_2_0.png"
+            alt="Shortest distance from the point (2, 0)"
+          />
+          <figcaption>Figure 4b: Shortest distance from $(2, 0)$.</figcaption>
+        </figure>
+      </li>
 
-  <li>
-    <strong>Point $(6, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $x = 0$<br />
-      $D'(0) = 2(0-6) + 4(0)(0^2+5) = -12$<br />
-      $D''(0) = 12(0)^2 + 22 = 22$<br />
-      $x_1 = 0 - \dfrac{-12}{22} \approx 0.5455$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $x = 0.5455$<br />
-      $D'(0.5455) = 2(0.5455-6) + 4(0.5455)((0.5455)^2+5) \approx 0.6491$<br />
-      $D''(0.5455) = 12(0.5455)^2 + 22 \approx 25.5702$<br />
-      $x_2 = 0.5455 - \dfrac{0.6491}{25.5702} \approx 0.5201$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $x = 0.5201$<br />
-      $D'(0.5201) \approx 0.0042$, $D''(0.5201) \approx 25.2457$<br />
-      $x_3 = 0.5201 - \dfrac{0.0042}{25.2457} \approx 0.5199$
-    </p>
-    <p>
-      Converges to $x^* \approx 0.5199$, giving $d \approx 7.60$, which
-      matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/iterates_6_0.png"
-        alt="Iterates for the point (6, 0)"
-      />
-      <figcaption>Figure 5a: Iterates for $(6, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/distance_6_0.png"
-        alt="Shortest distance from the point (6, 0)"
-      />
-      <figcaption>Figure 5b: Shortest distance from $(6, 0)$.</figcaption>
-    </figure>
-  </li>
-</ol>
+      <li>
+        <strong>Point $(6, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $x = 0$<br />
+          $D'(0) = 2(0-6) + 4(0)(0^2+5) = -12$<br />
+          $D''(0) = 12(0)^2 + 22 = 22$<br />
+          $x_1 = 0 - \dfrac{-12}{22} \approx 0.5455$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $x = 0.5455$<br />
+          $D'(0.5455) = 2(0.5455-6) + 4(0.5455)((0.5455)^2+5) \approx 0.6491$<br />
+          $D''(0.5455) = 12(0.5455)^2 + 22 \approx 25.5702$<br />
+          $x_2 = 0.5455 - \dfrac{0.6491}{25.5702} \approx 0.5201$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $x = 0.5201$<br />
+          $D'(0.5201) \approx 0.0042$, $D''(0.5201) \approx 25.2457$<br />
+          $x_3 = 0.5201 - \dfrac{0.0042}{25.2457} \approx 0.5199$
+        </p>
+        <p>
+          Converges to $x^* \approx 0.5199$, giving $d \approx 7.60$, which
+          matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/iterates_6_0.png"
+            alt="Iterates for the point (6, 0)"
+          />
+          <figcaption>Figure 5a: Iterates for $(6, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/distance_6_0.png"
+            alt="Shortest distance from the point (6, 0)"
+          />
+          <figcaption>Figure 5b: Shortest distance from $(6, 0)$.</figcaption>
+        </figure>
+      </li>
+    </ol>
     <h4>1.3.3 Other Functions and Non-Polynomial Cases</h4>
     <p>
       <code>find_distance_newton</code> takes $f$, $f'$ and $f''$ as inputs, so
@@ -570,7 +570,7 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
     best_x = (a + b) / 2
     return math.sqrt(dist_sq(best_x)), best_x</code></pre>
 
-    <h4>1.3.5 Hand Calculation for $f(x) = x^2 + 5$</h4>
+    <h4>1.3.5 Worked Solution for $f(x) = x^2 + 5$</h4>
     <p>
       For $y_0 = 0$, $D(x) = (x - x_0)^2 + (x^2 + 5)^2$. Since $D''(x) = 12x^2 +
       22 &gt; 0$ (Section 1.3.2), $D$ has a single minimum, as the method
