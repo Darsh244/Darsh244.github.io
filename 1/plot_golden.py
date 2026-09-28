@@ -58,7 +58,7 @@ def plot_brackets(x0, y0, steps, x_star):
     plt.yticks(range(1, n + 1), [f"Iteration {n - r + 1}" for r in range(1, n + 1)])
     plt.title(f"Golden section brackets for point ({x0}, {y0})")
     plt.xlabel("x")
-    plt.legend(loc="upper right", fontsize=8)
+    plt.legend(loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=3, fontsize=8)
     plt.tight_layout()
     plt.savefig(f"media/golden_brackets_{x0}_{y0}.png", dpi=150)
     plt.close()
