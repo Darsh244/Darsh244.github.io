@@ -284,7 +284,8 @@
         <p>
           <strong>Iteration 2:</strong><br />
           $x = -0.3636$<br />
-          $D'(-0.3636) = 2(-0.3636-(-4)) + 4(-0.3636)((-0.3636)^2+5) \approx -0.1923$<br />
+          $D'(-0.3636) = 2(-0.3636-(-4)) + 4(-0.3636)((-0.3636)^2+5) \approx
+          -0.1923$<br />
           $D''(-0.3636) = 12(-0.3636)^2 + 22 \approx 23.5868$<br />
           $x_2 = -0.3636 - \dfrac{-0.1923}{23.5868} \approx -0.3555$
         </p>
@@ -326,7 +327,8 @@
         <p>
           <strong>Iteration 2:</strong><br />
           $x = -0.7273$<br />
-          $D'(-0.7273) = 2(-0.7273-(-8)) + 4(-0.7273)((-0.7273)^2+5) \approx -1.5387$<br />
+          $D'(-0.7273) = 2(-0.7273-(-8)) + 4(-0.7273)((-0.7273)^2+5) \approx
+          -1.5387$<br />
           $D''(-0.7273) = 12(-0.7273)^2 + 22 \approx 28.3471$<br />
           $x_2 = -0.7273 - \dfrac{-1.5387}{28.3471} \approx -0.6730$
         </p>
@@ -501,9 +503,7 @@
             src="media/exp.png"
             alt="Shortest distance from (2, 0) and (0, -2) to y = e^x"
           />
-          <figcaption>
-            Figure 7a: Shortest distance to $f(x) = e^x$.
-          </figcaption>
+          <figcaption>Figure 7a: Shortest distance to $f(x) = e^x$.</figcaption>
         </figure>
         <figure>
           <img
@@ -622,265 +622,268 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
     </p>
 
     <ol>
-  <li>
-    <strong>Point $(0, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $[a, b] = [-2, 2]$<br />
-      $x_1 = -2 + 0.3820(2-(-2)) = -0.4721$<br />
-      $x_2 = 2 - 0.3820(2-(-2)) = 0.4721$<br />
-      $D(x_1) = (-0.4721-0)^2 + ((-0.4721)^2+5-0)^2 = 27.5017$<br />
-      $D(x_2) = (0.4721-0)^2 + ((0.4721)^2+5-0)^2 = 27.5017$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $[a, b] = [-0.4721, 2]$<br />
-      $x_1 = -0.4721 + 0.3820(2-(-0.4721)) = 0.4721$<br />
-      $x_2 = 2 - 0.3820(2-(-0.4721)) = 1.0557$<br />
-      $D(x_1) = 27.5017$, $D(x_2) = 38.5024$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $[a, b] = [-0.4721, 1.0557]$<br />
-      $x_1 = -0.4721 + 0.3820(1.0557-(-0.4721)) = 0.1115$<br />
-      $x_2 = 1.0557 - 0.3820(1.0557-(-0.4721)) = 0.4721$<br />
-      $D(x_1) = 25.1368$, $D(x_2) = 27.5017$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 4:</strong><br />
-      $[a, b] = [-0.4721, 0.4721]$<br />
-      $x_1 = -0.4721 + 0.3820(0.4721-(-0.4721)) = -0.1115$<br />
-      $x_2 = 0.4721 - 0.3820(0.4721-(-0.4721)) = 0.1115$<br />
-      $D(x_1) = 25.1368$, $D(x_2) = 25.1368$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0$, $d
-      \approx 5$, which matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/golden_brackets_0_0.png"
-        alt="Golden section brackets for the point (0, 0)"
-      />
-      <figcaption>Figure 9a: Bracket shrinking for $(0, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/golden_distance_0_0.png"
-        alt="Shortest distance from the point (0, 0)"
-      />
-      <figcaption>Figure 9b: Shortest distance from $(0, 0)$.</figcaption>
-    </figure>
-  </li>
+      <li>
+        <strong>Point $(0, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $[a, b] = [-2, 2]$<br />
+          $x_1 = -2 + 0.3820(2-(-2)) = -0.4721$<br />
+          $x_2 = 2 - 0.3820(2-(-2)) = 0.4721$<br />
+          $D(x_1) = (-0.4721-0)^2 + ((-0.4721)^2+5-0)^2 = 27.5017$<br />
+          $D(x_2) = (0.4721-0)^2 + ((0.4721)^2+5-0)^2 = 27.5017$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $[a, b] = [-0.4721, 2]$<br />
+          $x_1 = -0.4721 + 0.3820(2-(-0.4721)) = 0.4721$<br />
+          $x_2 = 2 - 0.3820(2-(-0.4721)) = 1.0557$<br />
+          $D(x_1) = 27.5017$, $D(x_2) = 38.5024$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $[a, b] = [-0.4721, 1.0557]$<br />
+          $x_1 = -0.4721 + 0.3820(1.0557-(-0.4721)) = 0.1115$<br />
+          $x_2 = 1.0557 - 0.3820(1.0557-(-0.4721)) = 0.4721$<br />
+          $D(x_1) = 25.1368$, $D(x_2) = 27.5017$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 4:</strong><br />
+          $[a, b] = [-0.4721, 0.4721]$<br />
+          $x_1 = -0.4721 + 0.3820(0.4721-(-0.4721)) = -0.1115$<br />
+          $x_2 = 0.4721 - 0.3820(0.4721-(-0.4721)) = 0.1115$<br />
+          $D(x_1) = 25.1368$, $D(x_2) = 25.1368$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0$, $d
+          \approx 5$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_0_0.png"
+            alt="Golden section brackets for the point (0, 0)"
+          />
+          <figcaption>Figure 9a: Bracket shrinking for $(0, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_0_0.png"
+            alt="Shortest distance from the point (0, 0)"
+          />
+          <figcaption>Figure 9b: Shortest distance from $(0, 0)$.</figcaption>
+        </figure>
+      </li>
 
-  <li>
-    <strong>Point $(-4, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $[a, b] = [-2, 2]$<br />
-      $x_1 = -2 + 0.3820(4) = -0.4721$, $x_2 = 2 - 0.3820(4) = 0.4721$<br />
-      $D(x_1) = (-0.4721-(-4))^2 + ((-0.4721)^2+5)^2 = 39.7246$<br />
-      $D(x_2) = (0.4721-(-4))^2 + ((0.4721)^2+5)^2 = 47.2788$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $[a, b] = [-2, 0.4721]$<br />
-      $x_1 = -2 + 0.3820(2.4721) = -1.0557$, $x_2 = 0.4721 - 0.3820(2.4721) = -0.4721$<br />
-      $D(x_1) = 46.0566$, $D(x_2) = 39.7246$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $[a, b] = [-1.0557, 0.4721]$<br />
-      $x_1 = -1.0557 + 0.3820(1.5278) = -0.4721$, $x_2 = 0.4721 - 0.3820(1.5278) = -0.1115$<br />
-      $D(x_1) = 39.7246$, $D(x_2) = 40.2452$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 4:</strong><br />
-      $[a, b] = [-1.0557, -0.1115]$<br />
-      $x_1 = -1.0557 + 0.3820(0.9442) = -0.6950$, $x_2 = -0.1115 - 0.3820(0.9442) = -0.4721$<br />
-      $D(x_1) = 40.9870$, $D(x_2) = 39.7246$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx -0.3555$, $d
-      \approx 6.29$, which matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/golden_brackets_-4_0.png"
-        alt="Golden section brackets for the point (-4, 0)"
-      />
-      <figcaption>Figure 10a: Bracket shrinking for $(-4, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/golden_distance_-4_0.png"
-        alt="Shortest distance from the point (-4, 0)"
-      />
-      <figcaption>Figure 10b: Shortest distance from $(-4, 0)$.</figcaption>
-    </figure>
-  </li>
+      <li>
+        <strong>Point $(-4, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $[a, b] = [-2, 2]$<br />
+          $x_1 = -2 + 0.3820(4) = -0.4721$, $x_2 = 2 - 0.3820(4) = 0.4721$<br />
+          $D(x_1) = (-0.4721-(-4))^2 + ((-0.4721)^2+5)^2 = 39.7246$<br />
+          $D(x_2) = (0.4721-(-4))^2 + ((0.4721)^2+5)^2 = 47.2788$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $[a, b] = [-2, 0.4721]$<br />
+          $x_1 = -2 + 0.3820(2.4721) = -1.0557$, $x_2 = 0.4721 - 0.3820(2.4721)
+          = -0.4721$<br />
+          $D(x_1) = 46.0566$, $D(x_2) = 39.7246$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $[a, b] = [-1.0557, 0.4721]$<br />
+          $x_1 = -1.0557 + 0.3820(1.5278) = -0.4721$, $x_2 = 0.4721 -
+          0.3820(1.5278) = -0.1115$<br />
+          $D(x_1) = 39.7246$, $D(x_2) = 40.2452$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 4:</strong><br />
+          $[a, b] = [-1.0557, -0.1115]$<br />
+          $x_1 = -1.0557 + 0.3820(0.9442) = -0.6950$, $x_2 = -0.1115 -
+          0.3820(0.9442) = -0.4721$<br />
+          $D(x_1) = 40.9870$, $D(x_2) = 39.7246$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx -0.3555$, $d
+          \approx 6.29$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_-4_0.png"
+            alt="Golden section brackets for the point (-4, 0)"
+          />
+          <figcaption>Figure 10a: Bracket shrinking for $(-4, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_-4_0.png"
+            alt="Shortest distance from the point (-4, 0)"
+          />
+          <figcaption>Figure 10b: Shortest distance from $(-4, 0)$.</figcaption>
+        </figure>
+      </li>
 
-  <li>
-    <strong>Point $(-8, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $[a, b] = [-2, 2]$<br />
-      $x_1 = -0.4721$, $x_2 = 0.4721$<br />
-      $D(x_1) = (-0.4721-(-8))^2 + ((-0.4721)^2+5)^2 = 83.9476$<br />
-      $D(x_2) = (0.4721-(-8))^2 + ((0.4721)^2+5)^2 = 99.0559$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $[a, b] = [-2, 0.4721]$<br />
-      $x_1 = -1.0557$, $x_2 = -0.4721$<br />
-      $D(x_1) = 85.6108$, $D(x_2) = 83.9476$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $[a, b] = [-1.0557, 0.4721]$<br />
-      $x_1 = -0.4721$, $x_2 = -0.1115$<br />
-      $D(x_1) = 83.9476$, $D(x_2) = 87.3535$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 4:</strong><br />
-      $[a, b] = [-1.0557, -0.1115]$<br />
-      $x_1 = -0.6950$, $x_2 = -0.4721$<br />
-      $D(x_1) = 83.4266$, $D(x_2) = 83.9476$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx -0.6721$, $d
-      \approx 9.13$, which matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/golden_brackets_-8_0.png"
-        alt="Golden section brackets for the point (-8, 0)"
-      />
-      <figcaption>Figure 11a: Bracket shrinking for $(-8, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/golden_distance_-8_0.png"
-        alt="Shortest distance from the point (-8, 0)"
-      />
-      <figcaption>Figure 11b: Shortest distance from $(-8, 0)$.</figcaption>
-    </figure>
-  </li>
+      <li>
+        <strong>Point $(-8, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $[a, b] = [-2, 2]$<br />
+          $x_1 = -0.4721$, $x_2 = 0.4721$<br />
+          $D(x_1) = (-0.4721-(-8))^2 + ((-0.4721)^2+5)^2 = 83.9476$<br />
+          $D(x_2) = (0.4721-(-8))^2 + ((0.4721)^2+5)^2 = 99.0559$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $[a, b] = [-2, 0.4721]$<br />
+          $x_1 = -1.0557$, $x_2 = -0.4721$<br />
+          $D(x_1) = 85.6108$, $D(x_2) = 83.9476$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $[a, b] = [-1.0557, 0.4721]$<br />
+          $x_1 = -0.4721$, $x_2 = -0.1115$<br />
+          $D(x_1) = 83.9476$, $D(x_2) = 87.3535$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 4:</strong><br />
+          $[a, b] = [-1.0557, -0.1115]$<br />
+          $x_1 = -0.6950$, $x_2 = -0.4721$<br />
+          $D(x_1) = 83.4266$, $D(x_2) = 83.9476$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx -0.6721$, $d
+          \approx 9.13$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_-8_0.png"
+            alt="Golden section brackets for the point (-8, 0)"
+          />
+          <figcaption>Figure 11a: Bracket shrinking for $(-8, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_-8_0.png"
+            alt="Shortest distance from the point (-8, 0)"
+          />
+          <figcaption>Figure 11b: Shortest distance from $(-8, 0)$.</figcaption>
+        </figure>
+      </li>
 
-  <li>
-    <strong>Point $(2, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $[a, b] = [-2, 2]$<br />
-      $x_1 = -0.4721$, $x_2 = 0.4721$<br />
-      $D(x_1) = (-0.4721-2)^2 + ((-0.4721)^2+5)^2 = 33.3903$<br />
-      $D(x_2) = (0.4721-2)^2 + ((0.4721)^2+5)^2 = 29.6132$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $[a, b] = [-0.4721, 2]$<br />
-      $x_1 = 0.4721$, $x_2 = 1.0557$<br />
-      $D(x_1) = 29.6132$, $D(x_2) = 38.2795$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $[a, b] = [-0.4721, 1.0557]$<br />
-      $x_1 = 0.1115$, $x_2 = 0.4721$<br />
-      $D(x_1) = 28.6910$, $D(x_2) = 29.6132$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 4:</strong><br />
-      $[a, b] = [-0.4721, 0.4721]$<br />
-      $x_1 = -0.1115$, $x_2 = 0.1115$<br />
-      $D(x_1) = 29.5826$, $D(x_2) = 28.6910$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0.1807$, $d
-      \approx 5.35$, which matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/golden_brackets_2_0.png"
-        alt="Golden section brackets for the point (2, 0)"
-      />
-      <figcaption>Figure 12a: Bracket shrinking for $(2, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/golden_distance_2_0.png"
-        alt="Shortest distance from the point (2, 0)"
-      />
-      <figcaption>Figure 12b: Shortest distance from $(2, 0)$.</figcaption>
-    </figure>
-  </li>
+      <li>
+        <strong>Point $(2, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $[a, b] = [-2, 2]$<br />
+          $x_1 = -0.4721$, $x_2 = 0.4721$<br />
+          $D(x_1) = (-0.4721-2)^2 + ((-0.4721)^2+5)^2 = 33.3903$<br />
+          $D(x_2) = (0.4721-2)^2 + ((0.4721)^2+5)^2 = 29.6132$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $[a, b] = [-0.4721, 2]$<br />
+          $x_1 = 0.4721$, $x_2 = 1.0557$<br />
+          $D(x_1) = 29.6132$, $D(x_2) = 38.2795$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $[a, b] = [-0.4721, 1.0557]$<br />
+          $x_1 = 0.1115$, $x_2 = 0.4721$<br />
+          $D(x_1) = 28.6910$, $D(x_2) = 29.6132$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 4:</strong><br />
+          $[a, b] = [-0.4721, 0.4721]$<br />
+          $x_1 = -0.1115$, $x_2 = 0.1115$<br />
+          $D(x_1) = 29.5826$, $D(x_2) = 28.6910$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0.1807$, $d
+          \approx 5.35$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_2_0.png"
+            alt="Golden section brackets for the point (2, 0)"
+          />
+          <figcaption>Figure 12a: Bracket shrinking for $(2, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_2_0.png"
+            alt="Shortest distance from the point (2, 0)"
+          />
+          <figcaption>Figure 12b: Shortest distance from $(2, 0)$.</figcaption>
+        </figure>
+      </li>
 
-  <li>
-    <strong>Point $(6, 0)$:</strong>
-    <p>
-      <strong>Iteration 1:</strong><br />
-      $[a, b] = [-2, 2]$<br />
-      $x_1 = -0.4721$, $x_2 = 0.4721$<br />
-      $D(x_1) = (-0.4721-6)^2 + ((-0.4721)^2+5)^2 = 69.1674$<br />
-      $D(x_2) = (0.4721-6)^2 + ((0.4721)^2+5)^2 = 57.8361$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      <strong>Iteration 2:</strong><br />
-      $[a, b] = [-0.4721, 2]$<br />
-      $x_1 = 0.4721$, $x_2 = 1.0557$<br />
-      $D(x_1) = 57.8361$, $D(x_2) = 61.8337$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      <strong>Iteration 3:</strong><br />
-      $[a, b] = [-0.4721, 1.0557]$<br />
-      $x_1 = 0.1115$, $x_2 = 0.4721$<br />
-      $D(x_1) = 59.7993$, $D(x_2) = 57.8361$<br />
-      $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
-    </p>
-    <p>
-      <strong>Iteration 4:</strong><br />
-      $[a, b] = [0.1115, 1.0557]$<br />
-      $x_1 = 0.4721$, $x_2 = 0.6950$<br />
-      $D(x_1) = 57.8361$, $D(x_2) = 58.2068$<br />
-      $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
-    </p>
-    <p>
-      Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0.5199$, $d
-      \approx 7.60$, which matches the analytical result.
-    </p>
-    <figure>
-      <img
-        src="media/golden_brackets_6_0.png"
-        alt="Golden section brackets for the point (6, 0)"
-      />
-      <figcaption>Figure 13a: Bracket shrinking for $(6, 0)$.</figcaption>
-    </figure>
-    <figure>
-      <img
-        src="media/golden_distance_6_0.png"
-        alt="Shortest distance from the point (6, 0)"
-      />
-      <figcaption>Figure 13b: Shortest distance from $(6, 0)$.</figcaption>
-    </figure>
-  </li>
-</ol>
+      <li>
+        <strong>Point $(6, 0)$:</strong>
+        <p>
+          <strong>Iteration 1:</strong><br />
+          $[a, b] = [-2, 2]$<br />
+          $x_1 = -0.4721$, $x_2 = 0.4721$<br />
+          $D(x_1) = (-0.4721-6)^2 + ((-0.4721)^2+5)^2 = 69.1674$<br />
+          $D(x_2) = (0.4721-6)^2 + ((0.4721)^2+5)^2 = 57.8361$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          <strong>Iteration 2:</strong><br />
+          $[a, b] = [-0.4721, 2]$<br />
+          $x_1 = 0.4721$, $x_2 = 1.0557$<br />
+          $D(x_1) = 57.8361$, $D(x_2) = 61.8337$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          <strong>Iteration 3:</strong><br />
+          $[a, b] = [-0.4721, 1.0557]$<br />
+          $x_1 = 0.1115$, $x_2 = 0.4721$<br />
+          $D(x_1) = 59.7993$, $D(x_2) = 57.8361$<br />
+          $D(x_1) \not< D(x_2)$ $\Rightarrow$ $a = x_1$
+        </p>
+        <p>
+          <strong>Iteration 4:</strong><br />
+          $[a, b] = [0.1115, 1.0557]$<br />
+          $x_1 = 0.4721$, $x_2 = 0.6950$<br />
+          $D(x_1) = 57.8361$, $D(x_2) = 58.2068$<br />
+          $D(x_1) < D(x_2)$ $\Rightarrow$ $b = x_2$
+        </p>
+        <p>
+          Continuing until $b - a &lt; 10^{-7}$ gives $x^* \approx 0.5199$, $d
+          \approx 7.60$, which matches the analytical result.
+        </p>
+        <figure>
+          <img
+            src="media/golden_brackets_6_0.png"
+            alt="Golden section brackets for the point (6, 0)"
+          />
+          <figcaption>Figure 13a: Bracket shrinking for $(6, 0)$.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="media/golden_distance_6_0.png"
+            alt="Shortest distance from the point (6, 0)"
+          />
+          <figcaption>Figure 13b: Shortest distance from $(6, 0)$.</figcaption>
+        </figure>
+      </li>
+    </ol>
 
     <h4>1.3.6 Other Functions and Non-Polynomial Cases</h4>
     <p>
@@ -940,7 +943,9 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
             src="media/golden_log.png"
             alt="Shortest distance from (2, 3) and (5, -1) to y = ln(x)"
           />
-          <figcaption>Figure 15a: Shortest distance to $f(x) = \ln x$.</figcaption>
+          <figcaption>
+            Figure 15a: Shortest distance to $f(x) = \ln x$.
+          </figcaption>
         </figure>
         <figure>
           <img
@@ -1001,27 +1006,34 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
       satisfy this.
     </p>
 
-    <h2> 2. Part 2: Fitting to an equation</h3>
+    <h2>2. Part 2: Fitting to an equation</h2>
     <p>
       We are given the points $(0, 0.5)$, $(2, 3.5)$, $(1, 1.5)$, $(3, 7.5)$,
-      and want to fit a line $y^*(x) = c_0 + c_1 x$, and a parabola $y^*(x) = c_0 + c_1x + c_2x^2$ 
-      by minimizing the min squared error of the fitted functions.
+      and want to fit a line $y^*(x) = c_0 + c_1 x$, and a parabola $y^*(x) =
+      c_0 + c_1x + c_2x^2$ by minimizing the mean squared error (MSE) of the
+      fitted functions.
     </p>
 
-    <h3> 2.1 Fitting a line</h3>
+    <h3>2.1 Fitting a line</h3>
 
     <p>The error at each point is:</p>
     $$e(x) = y^*(x) - y(x) = c_0 + c_1 x - y(x)$$
     <p>
-      We want $c_0, c_1$ that minimize the min squared error over all
+      We want $c_0, c_1$ that minimize the mean squared error over all $N = 4$
       points:
     </p>
-    $$P(c_0, c_1) = \sum \|e(x)\|_2^2$$
+    $$\text{MSE}(c_0, c_1) = \frac{1}{N}\sum \|e(x)\|_2^2 = \frac{P(c_0,
+    c_1)}{N}, \qquad P(c_0, c_1) = \sum \|e(x)\|_2^2$$
+    <p>
+      Here $P$ is the sum of squared errors. Since $N$ is a constant, minimizing
+      the MSE is the same as minimizing $P$, so we work with $P$ below and
+      divide by $N = 4$ at the end to get the MSE.
+    </p>
     <p>Substituting the four points:</p>
     $$P(c_0, c_1) = (c_0 - 0.5)^2 + (c_0 + 2c_1 - 3.5)^2 + (c_0 + c_1 - 1.5)^2 +
     (c_0 + 3c_1 - 7.5)^2$$
 
-    <h4>2.1.2 Analytical Solution</h4>
+    <h4>2.1.1 Analytical Solution</h4>
     <p>Setting the partial derivatives to zero:</p>
     $$\frac{\partial P}{\partial c_0} = 0 \;\Rightarrow\; 2(c_0 - 0.5) + 2(c_0 +
     2c_1 - 3.5) + 2(c_0 + c_1 - 1.5) + 2(c_0 + 3c_1 - 7.5) = 0$$ $$\Rightarrow\;
@@ -1031,7 +1043,10 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
     \;\Rightarrow\; 6c_0 + 14c_1 = 31$$
     <p>Solving these two equations simultaneously:</p>
     $$c_1 = 2.3, \qquad c_0 = -0.2$$ $$y^*(x) = -0.2 + 2.3x$$
-    <p>The minimum  squared error is $P(-0.2, 2.3) = 2.3$</p>
+    <p>
+      The minimum sum of squared errors is $P(-0.2, 2.3) = 2.3$, so the mean
+      squared error is $\text{MSE} = \dfrac{2.3}{4} = 0.575$.
+    </p>
 
     <figure>
       <img
@@ -1039,11 +1054,11 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
         alt="Analytical line fit against the data points"
       />
       <figcaption>
-        Figure 1: Analytical line fit compared to the data points.
+        Figure 17: Analytical line fit compared to the data points.
       </figcaption>
     </figure>
 
-    <h4>2.1.3 Numerical Solution: Newton-Raphson</h4>
+    <h4>2.1.2 Numerical Solution: Newton-Raphson</h4>
     <p>
       From $8c_0 + 12c_1 = 26$ and $12c_0 + 28c_1 = 62$, the partial derivatives
       and second partials are:
@@ -1063,12 +1078,12 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
     <p>Initial guess: $(c_0^{(0)}, c_1^{(0)}) = (0, 0)$.</p>
 
     <p>
-  The Newton-Raphson method is implemented with the following algorithm. The
-  function stores each pair $(c_0,c_1)$ so that the convergence can also be
-  visualized afterward.
-  </p>
+      The Newton-Raphson method is implemented with the following algorithm. The
+      function stores each pair $(c_0,c_1)$ so that the convergence can also be
+      visualized afterward.
+    </p>
 
-  <pre><code># Derivatives
+    <pre><code># Derivatives
   def dPdc0(c0, c1):
       return 8 * c0 + 12 * c1 - 26
 
@@ -1091,9 +1106,10 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
       return history
   </code></pre>
 
-  <p>
-    Starting from $(c_0^{(0)},c_1^{(0)})=(0,0)$, the first five iterations are:
-  </p>
+    <p>
+      Starting from $(c_0^{(0)},c_1^{(0)})=(0,0)$, the first five iterations
+      are:
+    </p>
 
     <ol>
       <li>
@@ -1109,35 +1125,31 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
       </li>
       <li>
         <strong>Iteration 3:</strong>
-        $$c_0^{(3)} = 2.02 - \frac{8(2.02) + 12(1.349) - 26}{8} \approx
-        1.226$$ $$c_1^{(3)} = 1.349 - \frac{12(1.226) + 28(1.349) -
-        62}{28} \approx 1.689$$
+        $$c_0^{(3)} = 2.02 - \frac{8(2.02) + 12(1.349) - 26}{8} \approx 1.226$$
+        $$c_1^{(3)} = 1.349 - \frac{12(1.226) + 28(1.349) - 62}{28} \approx
+        1.689$$
       </li>
 
       <li>
         <strong>Iteration 4:</strong>
-        $$c_0^{(4)} = 1.226 -
-        \frac{8(1.226) + 12(1.689) - 26}{8}
-        \approx 0.717$$
-        $$c_1^{(4)} = 1.689 -
-        \frac{12(0.717) + 28(1.689) - 62}{28}
+        $$c_0^{(4)} = 1.226 - \frac{8(1.226) + 12(1.689) - 26}{8} \approx
+        0.717$$ $$c_1^{(4)} = 1.689 - \frac{12(0.717) + 28(1.689) - 62}{28}
         \approx 1.907$$
       </li>
 
       <li>
         <strong>Iteration 5:</strong>
-        $$c_0^{(5)} = 0.717 -
-        \frac{8(0.717) + 12(1.907) - 26}{8}
-        \approx 0.389$$
-        $$c_1^{(5)} = 1.907 -
-        \frac{12(0.389) + 28(1.907) - 62}{28}
+        $$c_0^{(5)} = 0.717 - \frac{8(0.717) + 12(1.907) - 26}{8} \approx
+        0.389$$ $$c_1^{(5)} = 1.907 - \frac{12(0.389) + 28(1.907) - 62}{28}
         \approx 2.047$$
       </li>
-
+    </ol>
 
     <p>
       The iterates are steadily approaching the analytical solution $(c_0, c_1)
-      = (-0.2, 2.3)$, and continuing this process converges to it exactly.
+      = (-0.2, 2.3)$, and continuing this process converges to it. After 15
+      iterations, $(c_0, c_1) \approx (-0.193, 2.297)$ with $\text{MSE} \approx
+      0.57502$, which matches the analytical MSE of $0.575$.
     </p>
 
     <figure>
@@ -1146,7 +1158,7 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
         alt="Convergence of c0 and c1 across Newton-Raphson iterations"
       />
       <figcaption>
-        Figure 2: Newton-Raphson convergence of $c_0$ and $c_1$ toward the
+        Figure 18: Newton-Raphson convergence of $c_0$ and $c_1$ toward the
         analytical values.
       </figcaption>
     </figure>
@@ -1156,22 +1168,37 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
     <p>The error at each point is:</p>
     $$e(x) = y^*(x) - y(x) = c_0 + c_1 x + c_2 x^2 - y(x)$$
     <p>
-      We want $c_0, c_1, c_2$ that minimize the min squared error over all
-      points:
+      We want $c_0, c_1, c_2$ that minimize the mean squared error over all $N =
+      4$ points:
     </p>
-    $$P(c_0, c_1, c_2) = \sum \|e(x)\|_2^2$$
+    $$\text{MSE}(c_0, c_1, c_2) = \frac{1}{N}\sum \|e(x)\|_2^2 = \frac{P(c_0,
+    c_1, c_2)}{N}, \qquad P(c_0, c_1, c_2) = \sum \|e(x)\|_2^2$$
+    <p>
+      As before, $P$ is the sum of squared errors, and minimizing the MSE is the
+      same as minimizing $P$, so we work with $P$ and divide by $N = 4$ at the
+      end.
+    </p>
     <p>Substituting the four points:</p>
-    $$P(c_0, c_1, c_2) = (c_0 - 0.5)^2 + (c_0 + 2c_1 + 4c_2 - 3.5)^2 + (c_0 + c_1 + c_2 - 1.5)^2 + (c_0 + 3c_1 + 9c_2 - 7.5)^2$$
+    $$P(c_0, c_1, c_2) = (c_0 - 0.5)^2 + (c_0 + 2c_1 + 4c_2 - 3.5)^2 + (c_0 +
+    c_1 + c_2 - 1.5)^2 + (c_0 + 3c_1 + 9c_2 - 7.5)^2$$
 
-    <h4>2.2.2 Analytical Solution</h4>
-    <p>Setting the three partial derivatives to zero gives the normal equations:</p>
-    $$\frac{\partial P}{\partial c_0} = 0 \;\Rightarrow\; 8c_0 + 12c_1 + 28c_2 = 26$$
-    $$\frac{\partial P}{\partial c_1} = 0 \;\Rightarrow\; 12c_0 + 28c_1 + 72c_2 = 62$$
-    $$\frac{\partial P}{\partial c_2} = 0 \;\Rightarrow\; 28c_0 + 72c_1 + 196c_2 = 166$$
+    <h4>2.2.1 Analytical Solution</h4>
+    <p>Setting the three partial derivatives to zero gives the equations:</p>
+    $$\frac{\partial P}{\partial c_0} = 0 \;\Rightarrow\; 8c_0 + 12c_1 + 28c_2 =
+    26$$ $$\frac{\partial P}{\partial c_1} = 0 \;\Rightarrow\; 12c_0 + 28c_1 +
+    72c_2 = 62$$ $$\frac{\partial P}{\partial c_2} = 0 \;\Rightarrow\; 28c_0 +
+    72c_1 + 196c_2 = 166$$
+    <p>In matrix form, the equations are:</p>
+    $$\begin{bmatrix} 8 & 12 & 28 \\ 12 & 28 & 72 \\ 28 & 72 & 196 \end{bmatrix}
+    \begin{bmatrix} c_0 \\ c_1 \\ c_2 \end{bmatrix} = \begin{bmatrix} 26 \\ 62
+    \\ 166 \end{bmatrix}$$
     <p>Solving these three equations simultaneously:</p>
-    $$c_0 = 0.55, \qquad c_1 = 0.05, \qquad c_2 = 0.75$$
-    $$y^*(x) = 0.55 + 0.05x + 0.75x^2$$
-    <p>The minimum squared error is $P(0.55, 0.05, 0.75) = 0.05$.</p>
+    $$c_0 = 0.55, \qquad c_1 = 0.05, \qquad c_2 = 0.75$$ $$y^*(x) = 0.55 + 0.05x
+    + 0.75x^2$$
+    <p>
+      The minimum sum of squared errors is $P(0.55, 0.05, 0.75) = 0.05$, so the
+      mean squared error is $\text{MSE} = \dfrac{0.05}{4} = 0.0125$.
+    </p>
 
     <figure>
       <img
@@ -1179,26 +1206,28 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
         alt="Analytical parabola fit against the data points"
       />
       <figcaption>
-        Figure 3: Analytical parabola fit compared to the data points.
+        Figure 19: Analytical parabola fit compared to the data points.
       </figcaption>
     </figure>
 
-    <h4>2.2.3 Numerical Solution: Newton-Raphson</h4>
+    <h4>2.2.2 Numerical Solution: Newton-Raphson</h4>
     <p>
-      From the normal equations above, the partial derivatives and second
-      partials are:
+      From the equations above, the partial derivatives and second partials are:
     </p>
-    $$\frac{\partial P}{\partial c_0} = 8c_0 + 12c_1 + 28c_2 - 26, \qquad \frac{\partial^2 P}{\partial c_0^2} = 8$$
-    $$\frac{\partial P}{\partial c_1} = 12c_0 + 28c_1 + 72c_2 - 62, \qquad \frac{\partial^2 P}{\partial c_1^2} = 28$$
-    $$\frac{\partial P}{\partial c_2} = 28c_0 + 72c_1 + 196c_2 - 166, \qquad \frac{\partial^2 P}{\partial c_2^2} = 196$$
+    $$\frac{\partial P}{\partial c_0} = 8c_0 + 12c_1 + 28c_2 - 26, \qquad
+    \frac{\partial^2 P}{\partial c_0^2} = 8$$ $$\frac{\partial P}{\partial c_1}
+    = 12c_0 + 28c_1 + 72c_2 - 62, \qquad \frac{\partial^2 P}{\partial c_1^2} =
+    28$$ $$\frac{\partial P}{\partial c_2} = 28c_0 + 72c_1 + 196c_2 - 166,
+    \qquad \frac{\partial^2 P}{\partial c_2^2} = 196$$
     <p>
       Following the same coordinate-wise pattern as the line, each iteration
       updates $c_0$, then $c_1$ using the new $c_0$, then $c_2$ using the new
       $c_0$ and $c_1$:
     </p>
-    $$c_0^{(n+1)} = c_0^{(n)} - \frac{8c_0^{(n)} + 12c_1^{(n)} + 28c_2^{(n)} - 26}{8}$$
-    $$c_1^{(n+1)} = c_1^{(n)} - \frac{12c_0^{(n+1)} + 28c_1^{(n)} + 72c_2^{(n)} - 62}{28}$$
-    $$c_2^{(n+1)} = c_2^{(n)} - \frac{28c_0^{(n+1)} + 72c_1^{(n+1)} + 196c_2^{(n)} - 166}{196}$$
+    $$c_0^{(n+1)} = c_0^{(n)} - \frac{8c_0^{(n)} + 12c_1^{(n)} + 28c_2^{(n)} -
+    26}{8}$$ $$c_1^{(n+1)} = c_1^{(n)} - \frac{12c_0^{(n+1)} + 28c_1^{(n)} +
+    72c_2^{(n)} - 62}{28}$$ $$c_2^{(n+1)} = c_2^{(n)} - \frac{28c_0^{(n+1)} +
+    72c_1^{(n+1)} + 196c_2^{(n)} - 166}{196}$$
     <p>Initial guess: $(c_0^{(0)}, c_1^{(0)}, c_2^{(0)}) = (0, 0, 0)$.</p>
 
     <p>
@@ -1243,43 +1272,49 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
     <ol>
       <li>
         <strong>Iteration 1:</strong>
-        $$c_0^{(1)} = 0 - \frac{-26}{8} = 3.25$$
-        $$c_1^{(1)} = 0 - \frac{12(3.25) - 62}{28} \approx 0.821$$
-        $$c_2^{(1)} = 0 - \frac{28(3.25) + 72(0.821) - 166}{196} \approx 0.081$$
+        $$c_0^{(1)} = 0 - \frac{-26}{8} = 3.25$$ $$c_1^{(1)} = 0 -
+        \frac{12(3.25) - 62}{28} \approx 0.821$$ $$c_2^{(1)} = 0 -
+        \frac{28(3.25) + 72(0.821) - 166}{196} \approx 0.081$$
       </li>
       <li>
         <strong>Iteration 2:</strong>
-        $$c_0^{(2)} = 3.25 - \frac{8(3.25) + 12(0.821) + 28(0.081) - 26}{8} \approx 1.735$$
-        $$c_1^{(2)} = 0.821 - \frac{12(1.735) + 28(0.821) + 72(0.081) - 62}{28} \approx 1.263$$
-        $$c_2^{(2)} = 0.081 - \frac{28(1.735) + 72(1.263) + 196(0.081) - 166}{196} \approx 0.135$$
+        $$c_0^{(2)} = 3.25 - \frac{8(3.25) + 12(0.821) + 28(0.081) - 26}{8}
+        \approx 1.735$$ $$c_1^{(2)} = 0.821 - \frac{12(1.735) + 28(0.821) +
+        72(0.081) - 62}{28} \approx 1.262$$ $$c_2^{(2)} = 0.081 -
+        \frac{28(1.735) + 72(1.263) + 196(0.081) - 166}{196} \approx 0.135$$
       </li>
       <li>
         <strong>Iteration 3:</strong>
-        $$c_0^{(3)} = 1.735 - \frac{8(1.735) + 12(1.262) + 28(0.135) - 26}{8} \approx 0.883$$
-        $$c_1^{(3)} = 1.262 - \frac{12(0.883) + 28(1.262) + 72(0.135) - 62}{28} \approx 1.488$$
-        $$c_2^{(3)} = 0.135 - \frac{28(0.883) + 72(1.488) + 196(0.135) - 166}{196} \approx 0.174$$
+        $$c_0^{(3)} = 1.735 - \frac{8(1.735) + 12(1.262) + 28(0.135) - 26}{8}
+        \approx 0.883$$ $$c_1^{(3)} = 1.262 - \frac{12(0.883) + 28(1.262) +
+        72(0.135) - 62}{28} \approx 1.488$$ $$c_2^{(3)} = 0.135 -
+        \frac{28(0.883) + 72(1.488) + 196(0.135) - 166}{196} \approx 0.174$$
       </li>
       <li>
         <strong>Iteration 4:</strong>
-        $$c_0^{(4)} = 0.883 - \frac{8(0.883) + 12(1.488) + 28(0.174) - 26}{8} \approx 0.408$$
-        $$c_1^{(4)} = 1.488 - \frac{12(0.408) + 28(1.488) + 72(0.174) - 62}{28} \approx 1.591$$
-        $$c_2^{(4)} = 0.174 - \frac{28(0.408) + 72(1.591) + 196(0.174) - 166}{196} \approx 0.204$$
+        $$c_0^{(4)} = 0.883 - \frac{8(0.883) + 12(1.488) + 28(0.174) - 26}{8}
+        \approx 0.408$$ $$c_1^{(4)} = 1.488 - \frac{12(0.408) + 28(1.488) +
+        72(0.174) - 62}{28} \approx 1.591$$ $$c_2^{(4)} = 0.174 -
+        \frac{28(0.408) + 72(1.591) + 196(0.174) - 166}{196} \approx 0.204$$
       </li>
       <li>
         <strong>Iteration 5:</strong>
-        $$c_0^{(5)} = 0.408 - \frac{8(0.408) + 12(1.591) + 28(0.204) - 26}{8} \approx 0.149$$
-        $$c_1^{(5)} = 1.591 - \frac{12(0.149) + 28(1.591) + 72(0.204) - 62}{28} \approx 1.626$$
-        $$c_2^{(5)} = 0.204 - \frac{28(0.149) + 72(1.626) + 196(0.204) - 166}{196} \approx 0.228$$
+        $$c_0^{(5)} = 0.408 - \frac{8(0.408) + 12(1.591) + 28(0.204) - 26}{8}
+        \approx 0.149$$ $$c_1^{(5)} = 1.591 - \frac{12(0.149) + 28(1.591) +
+        72(0.204) - 62}{28} \approx 1.626$$ $$c_2^{(5)} = 0.204 -
+        \frac{28(0.149) + 72(1.626) + 196(0.204) - 166}{196} \approx 0.228$$
       </li>
     </ol>
 
     <p>
-      Unlike the line, which converges close to its analytical values within
-      about 15 iterations, the parabola's three parameters converge much more
-      slowly under this coordinate-wise update: $c_0$ dips slightly negative
-      before settling, and $c_1$ overshoots to about $1.63$ before decreasing
-      back down toward $0.05$. Around 300 iterations are needed to approach the
-      analytical solution $(c_0, c_1, c_2) = (0.55, 0.05, 0.75)$ closely.
+      Unlike the line, which converges to its analytical solution within
+      approximately 15 iterations, the parabola converges much more slowly. In
+      the early iterations, $c_0$ briefly becomes negative, while $c_1$
+      overshoots to approximately $1.63$ before gradually decreasing toward its
+      analytical value of $0.05$. After approximately 300 iterations, the
+      parameters have converged closely to the analytical solution, with $(c_0,
+      c_1, c_2) \approx (0.54997, 0.05006, 0.74998)$ and $\text{MSE} \approx
+      0.0125$, matching the analytical MSE.
     </p>
 
     <figure>
@@ -1288,8 +1323,8 @@ def golden_section_search(x0, y0, f, a, b, tolerance=1e-7):
         alt="Convergence of c0, c1 and c2 across Newton-Raphson iterations"
       />
       <figcaption>
-        Figure 4: Newton-Raphson convergence of $c_0$, $c_1$ and $c_2$ toward the
-        analytical values.
+        Figure 20: Newton-Raphson convergence of $c_0$, $c_1$ and $c_2$ toward
+        the analytical values.
       </figcaption>
     </figure>
   </body>
