@@ -66,38 +66,6 @@
       and (d) is feature $2$, INDUS (proportion of non-retail business acres).
     </p>
 
-    <pre><code>def load_data(path=&quot;BostonHousing.csv&quot;):
-    &quot;&quot;&quot;First 100 rows -&gt; training set, remaining 406 rows -&gt; test set.&quot;&quot;&quot;
-    data = pd.read_csv(path).values.astype(float)
-    X, t = data[:, :-1], data[:, -1]
-    return X[:N_TRAIN], t[:N_TRAIN], X[N_TRAIN:], t[N_TRAIN:]
-
-
-def normalize(X_train, *others):
-    &quot;&quot;&quot;Z-score using the training mean/std only (std of 0 is replaced by 1).&quot;&quot;&quot;
-    mu = X_train.mean(axis=0)
-    sd = X_train.std(axis=0)
-    sd[sd == 0] = 1.0
-    return [(X_train - mu) / sd] + [(X - mu) / sd for X in others]
-
-
-def poly_design(X, degree):
-    &quot;&quot;&quot;Bias column, then x1..x1^d, x2..x2^d, ... (monomials, no cross-terms).&quot;&quot;&quot;
-    cols = [np.ones(len(X))]
-    for j in range(X.shape[1]):
-        for p in range(1, degree + 1):
-            cols.append(X[:, j] ** p)
-    return np.column_stack(cols)
-
-
-def fit_ls(Phi, t):
-    &quot;&quot;&quot;Unregularized least squares, w = pinv(Phi) t.&quot;&quot;&quot;
-    return np.linalg.lstsq(Phi, t, rcond=None)[0]
-
-
-def rmse(Phi, w, t):
-    return np.sqrt(np.mean((Phi @ w - t) ** 2))</code></pre>
-
     <h3>1.2 (a) Error versus Polynomial Degree</h3>
     <p>
       <code>polynomial_regression</code> fits degrees $1$ to $7$ on all 13
@@ -436,7 +404,7 @@ def polynomial_regression_reg(X_train, t_train, degree=8, feature=2,
     for i in range(k):
         val = folds[i]
         trn = np.concatenate([folds[j] for j in range(k) if j != i])
-        xn_trn, xn_val = normalize(x[trn], x[val])   # stats from fold only
+        xn_trn, xn_val = normalize(x[trn], x[val])
         Phi_trn = poly_design(xn_trn, degree)
         Phi_val = poly_design(xn_val, degree)
         for lam in lambdas:
@@ -509,6 +477,305 @@ def polynomial_regression_reg(X_train, t_train, degree=8, feature=2,
       = 0.1$ was best 29 times and $\lambda = 1$ was best 20 times, with median
       errors of 4.12 and 4.14, so these two values are practically tied, and any
       value in this range is acceptable.
+    </p>
+
+    <h2>2. Part 2: Gaussian Basis Function</h2>
+    <p>
+      This part uses Gaussian basis functions instead of polynomials. Each basis
+      function is centred on a randomly chosen training point
+      $\boldsymbol{\mu}_j$, and the model is $$y(\mathbf{x}) = w_0 +
+      \sum_{j=1}^{K} w_j \exp\left(-\frac{\|\mathbf{x} -
+      \boldsymbol{\mu}_j\|^2}{2s^2}\right)$$ All 13 features are used. The same
+      train/test split (first 100 / last 406 points) and the same training-set
+      normalization as in Part 1 are used.
+    </p>
+
+    <h3>2.1 Setup and Method</h3>
+    <p>
+      <strong>Width.</strong> The assignment does not specify the width $s$, so
+      I use the median heuristic: $s$ is the median Euclidean distance between
+      pairs of (normalized) training points, which gives $s = 4.625$. It is
+      computed from the training inputs only, was fixed before looking at any
+      errors, and is not tuned on the test set. The results do depend on this
+      choice: with half this width the large-$K$ test error is much smaller, and
+      with twice this width it is much larger.
+    </p>
+    <p>
+      <strong>Centers.</strong> A random permutation of the training points is
+      generated (fixed seed) and the first $K$ points are used as centers, so
+      the centers for a smaller $K$ are a subset of those for a larger $K$. The
+      bias $w_0$ is included. <strong>Fitting</strong> uses the same
+      least-squares solver as Part 1 for (e) and the ridge solution $\mathbf{w}
+      = (\Phi^T\Phi + \lambda I')^{-1}\Phi^T\mathbf{t}$ (bias not penalized) for
+      (f).
+    </p>
+
+    <pre><code>def median_width(X):
+    &quot;&quot;&quot;Width heuristic: median Euclidean distance between training points.&quot;&quot;&quot;
+    diff = X[:, None, :] - X[None, :, :]
+    dist = np.sqrt((diff ** 2).sum(axis=2))
+    return np.median(dist[np.triu_indices(len(X), k=1)])
+
+
+def gaussian_design(X, centers, width):
+    &quot;&quot;&quot;Bias column, then exp(-||x - mu_j||^2 / (2 width^2)) for each center.&quot;&quot;&quot;
+    sq = ((X[:, None, :] - centers[None, :, :]) ** 2).sum(axis=2)
+    return np.column_stack([np.ones(len(X)),
+                            np.exp(-sq / (2 * width ** 2))])</code></pre>
+
+    <h3>2.2 (e) Error versus Number of Basis Functions</h3>
+    <p>
+      <code>gaussian_regression</code> fits $K = 5, 15, \dots, 95$ basis
+      functions without regularization and returns the training and test RMS
+      errors.
+    </p>
+
+    <pre><code>def gaussian_regression(X_train, t_train, X_test, t_test,
+                        ks=range(5, 100, 10), seed=0):
+    &quot;&quot;&quot;Gaussian basis regression with K random training points as centers.&quot;&quot;&quot;
+    Xn_train, Xn_test = normalize(X_train, X_test)
+    width = median_width(Xn_train)
+    perm = np.random.default_rng(seed).permutation(len(Xn_train))
+    train_err, test_err = [], []
+    for K in ks:
+        centers = Xn_train[perm[:K]]         
+        Phi_train = gaussian_design(Xn_train, centers, width)
+        Phi_test = gaussian_design(Xn_test, centers, width)
+        w = fit_ls(Phi_train, t_train)
+        train_err.append(rmse(Phi_train, w, t_train))
+        test_err.append(rmse(Phi_test, w, t_test))
+    return list(ks), train_err, test_err, width</code></pre>
+
+    <table class="results">
+      <caption>
+        Table 4: Training and test RMS error (thousands of dollars) versus the
+        number of Gaussian basis functions $K$. The last column is the median
+        test RMS error over 30 different random permutations of the centers.
+      </caption>
+      <thead>
+        <tr>
+          <th>$K$</th>
+          <th>Training RMS</th>
+          <th>Test RMS</th>
+          <th>Median test RMS (30 permutations)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>5</td>
+          <td>3.571</td>
+          <td>10.68</td>
+          <td>10.40</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>2.172</td>
+          <td>8.75</td>
+          <td>8.77</td>
+        </tr>
+        <tr>
+          <td>25</td>
+          <td>1.591</td>
+          <td>9.45</td>
+          <td>8.74</td>
+        </tr>
+        <tr>
+          <td>35</td>
+          <td>1.464</td>
+          <td>9.64</td>
+          <td>9.86</td>
+        </tr>
+        <tr>
+          <td>45</td>
+          <td>1.212</td>
+          <td>8.45</td>
+          <td>9.51</td>
+        </tr>
+        <tr>
+          <td>55</td>
+          <td>1.110</td>
+          <td>10.41</td>
+          <td>10.34</td>
+        </tr>
+        <tr>
+          <td>65</td>
+          <td>1.033</td>
+          <td>9.17</td>
+          <td>13.70</td>
+        </tr>
+        <tr>
+          <td>75</td>
+          <td>0.948</td>
+          <td>8.84</td>
+          <td>17.60</td>
+        </tr>
+        <tr>
+          <td>85</td>
+          <td>0.865</td>
+          <td>10.54</td>
+          <td>47.43</td>
+        </tr>
+        <tr>
+          <td>95</td>
+          <td>0.286</td>
+          <td>54.49</td>
+          <td>102.69</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <figure>
+      <img
+        src="media/gaussian_error_vs_K.png"
+        alt="Training and test RMS error versus number of Gaussian basis functions"
+      />
+      <figcaption>
+        Figure 6: Training and test RMS error versus the number of Gaussian
+        basis functions $K$ (log scale on the vertical axis).
+      </figcaption>
+    </figure>
+
+    <p>
+      <strong>Comment.</strong> The training error decreases steadily as $K$
+      grows, from 3.57 at $K = 5$ to 0.29 at $K = 95$, since more basis
+      functions give the model more freedom. The test error does not follow it:
+      it stays between about 8.5 and 10.7 for every $K$ up to $85$ with no clear
+      trend, and then jumps to 54.5 at $K = 95$. Averaging over 30 random
+      permutations of the centers shows the underlying pattern more clearly: the
+      median test error is lowest (8.8) for $K$ around $15$ to $25$ and then
+      rises to 13.7 at $K = 65$ and 103 at $K = 95$, which is the usual
+      overfitting behaviour. At $K = 95$ the model has 96 weights for 100
+      training points, so it nearly interpolates the training data (training RMS
+      0.29) and its weights become very large (the largest is about 14,936, and
+      the bias is -69).
+    </p>
+    <p>
+      Two other observations. First, unlike the polynomials in Part 1, the test
+      error never explodes to astronomical values for moderate $K$, because a
+      Gaussian basis function is localized: for the 130 of the 406 test points
+      that are far from every center (all basis functions below $0.001$), the
+      prediction falls back to roughly the bias $w_0$ instead of growing without
+      bound. This is also what drives the $K = 95$ result, since there the bias
+      is -69, so those points are predicted around that value. Second, the test
+      errors for moderate $K$ (about 8 to 10) are only comparable to the error
+      of simply predicting the training mean (9.83). The first 100 towns are not
+      representative of the rest of the dataset, so none of these models predict
+      the test set well, and the lowest test errors are not reliably better than
+      the constant predictor.
+    </p>
+
+    <h3>2.3 (f) L2-Regularized Gaussian Regression</h3>
+    <p>
+      <code>gaussian_regression_reg</code> fits a model with 90 basis functions
+      for each $\lambda \in \{0, 0.01, 0.1, 1, 10, 100, 1000\}$ using all 13
+      features, and evaluates it with 10-fold cross-validation on the first 100
+      points. The points are randomly shuffled (fixed seed) into 10 folds of 10.
+      Inside each fold, the normalization, the width $s$ and the centers are
+      computed only from that fold's 90 training points, so no validation point
+      is used to build the model; with 90 basis functions this means every one
+      of those 90 points is a center. The validation RMS error is averaged over
+      the 10 folds.
+    </p>
+
+    <pre><code>def gaussian_regression_reg(X_train, t_train, n_basis=90, lambdas=LAMBDAS,
+                            k=10, seed=0):
+    &quot;&quot;&quot;10-fold CV for L2-regularized Gaussian basis regression (all features).
+
+    Normalization, width and centers are all computed from the training part
+    of each fold only (the validation points are never used to build them).
+    &quot;&quot;&quot;
+    n = len(X_train)
+    rng = np.random.default_rng(seed)
+    folds = np.array_split(rng.permutation(n), k)
+    cv_err = {lam: [] for lam in lambdas}
+    for i in range(k):
+        val = folds[i]
+        trn = np.concatenate([folds[j] for j in range(k) if j != i])
+        Xn_trn, Xn_val = normalize(X_train[trn], X_train[val])
+        width = median_width(Xn_trn)
+        perm = rng.permutation(len(trn))
+        centers = Xn_trn[perm[:n_basis]]
+        Phi_trn = gaussian_design(Xn_trn, centers, width)
+        Phi_val = gaussian_design(Xn_val, centers, width)
+        for lam in lambdas:
+            w = fit_ridge(Phi_trn, t_train[trn], lam)
+            cv_err[lam].append(rmse(Phi_val, w, t_train[val]))
+    return {lam: float(np.mean(e)) for lam, e in cv_err.items()}</code></pre>
+
+    <table class="results">
+      <caption>
+        Table 5: Average 10-fold validation RMS error (thousands of dollars)
+        versus $\lambda$ for 90 Gaussian basis functions
+      </caption>
+      <thead>
+        <tr>
+          <th>$\lambda$</th>
+          <th>Mean validation RMS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>$0$</td>
+          <td>12.848</td>
+        </tr>
+        <tr>
+          <td>$0.01$</td>
+          <td>2.052</td>
+        </tr>
+        <tr>
+          <td>$0.1$</td>
+          <td>2.247</td>
+        </tr>
+        <tr>
+          <td>$1$</td>
+          <td>2.632</td>
+        </tr>
+        <tr>
+          <td>$10$</td>
+          <td>3.221</td>
+        </tr>
+        <tr>
+          <td>$100$</td>
+          <td>4.298</td>
+        </tr>
+        <tr>
+          <td>$1000$</td>
+          <td>5.345</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <figure>
+      <img
+        src="media/gaussian_reg_cv.png"
+        alt="Average validation error versus regularization constant for Gaussian regression"
+      />
+      <figcaption>
+        Figure 7: Average validation RMS error versus $\lambda$ (log scale). The
+        dashed line is the unregularized ($\lambda = 0$) result of 12.85.
+      </figcaption>
+    </figure>
+
+    <p>
+      <strong>Choice of $\lambda$.</strong> The validation error is lowest at
+      $\lambda = 0.01$ (2.05) and increases steadily for larger $\lambda$,
+      reaching 5.35 at $\lambda = 1000$, where the model is so heavily penalized
+      that it predicts close to a constant. Without regularization the error is
+      12.8, about six times larger, because 90 basis functions fitted to 90
+      points in each fold interpolate the training data and generalize badly. I
+      would choose $\lambda = 0.01$. This choice is stable: repeating the
+      cross-validation with 30 different random shuffles, $\lambda = 0.01$ was
+      the best value every time. Since 0.01 is the smallest nonzero value in the
+      grid, an even smaller $\lambda$ might do slightly better, but it is the
+      best of the values asked for.
+    </p>
+    <p>
+      One caution when comparing with part (e): the validation errors here
+      (about 2) are much lower than the test errors in (e) (about 9). The
+      validation folds come from the same 100 towns as the training folds, while
+      the test set contains towns unlike any of them, so cross-validation only
+      tells us which $\lambda$ works best within the training region, not how
+      well the model transfers to the rest of the dataset.
     </p>
   </body>
 </html>

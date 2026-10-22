@@ -10,7 +10,7 @@ FEATURES = ["CRIM", "ZN", "INDUS", "CHAS", "NOX", "RM", "AGE",
 def load_data(path="BostonHousing.csv"):
     """First 100 rows -> training set, remaining 406 rows -> test set."""
     with open(path) as f:
-        rows = list(csv.reader(f))[1:]          # skip the header row
+        rows = list(csv.reader(f))[1:]         
     data = np.array(rows, dtype=float)
     X, t = data[:, :-1], data[:, -1]
     return X[:N_TRAIN], t[:N_TRAIN], X[N_TRAIN:], t[N_TRAIN:]
@@ -49,7 +49,6 @@ def rmse(Phi, w, t):
     return np.sqrt(np.mean((Phi @ w - t) ** 2))
 
 
-# ---------------------------------------------------------------- part (a)
 def polynomial_regression(X_train, t_train, X_test, t_test, max_degree=7):
     """Fit degree 1..max_degree polynomial basis regression (all features)."""
     Xn_train, Xn_test = normalize(X_train, X_test)
@@ -64,7 +63,6 @@ def polynomial_regression(X_train, t_train, X_test, t_test, max_degree=7):
     return train_err, test_err, weights
 
 
-# ---------------------------------------------------------------- part (c)
 def polynomial_regression_1d_vis(X_train, t_train, X_test, t_test,
                                  degree, feature=2, ax=None):
     """Fit a degree-d polynomial to a single feature and plot it."""
@@ -72,7 +70,7 @@ def polynomial_regression_1d_vis(X_train, t_train, X_test, t_test,
     xn_train, xn_test = normalize(x_train, x_test)
     w = fit_ls(poly_design(xn_train, degree), t_train)
 
-    # dense grid in the original units, normalized with the training stats
+    
     lo = min(x_train.min(), x_test.min())
     hi = max(x_train.max(), x_test.max())
     grid = np.linspace(lo, hi, 400)[:, None]
@@ -92,7 +90,6 @@ def polynomial_regression_1d_vis(X_train, t_train, X_test, t_test,
             rmse(poly_design(xn_test, degree), w, t_test))
 
 
-# ---------------------------------------------------------------- part (d)
 LAMBDAS = [0, 0.01, 0.1, 1, 10, 100, 1000]
 
 
@@ -106,7 +103,7 @@ def polynomial_regression_reg(X_train, t_train, degree=8, feature=2,
     for i in range(k):
         val = folds[i]
         trn = np.concatenate([folds[j] for j in range(k) if j != i])
-        xn_trn, xn_val = normalize(x[trn], x[val])   # stats from fold only
+        xn_trn, xn_val = normalize(x[trn], x[val])   
         Phi_trn = poly_design(xn_trn, degree)
         Phi_val = poly_design(xn_val, degree)
         for lam in lambdas:
